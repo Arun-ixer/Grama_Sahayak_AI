@@ -1,7 +1,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ override: true });
 
 // Helper for transient API error retries (exponential backoff)
 async function postWithRetry(url, payload, options = {}, retries = 5, delay = 1000) {

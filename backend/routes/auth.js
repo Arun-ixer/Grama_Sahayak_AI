@@ -1,5 +1,6 @@
 import express from 'express';
 import { supabaseService } from '../services/supabaseService.js';
+import { createClient } from '@supabase/supabase-js';
 
 const router = express.Router();
 
@@ -46,7 +47,12 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        const { data, error } = await supabaseService.supabase.auth.signInWithPassword({
+        // Create a temporary client so we don't mutate the global service_role client's session
+        const tempClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY, {
+            auth: { persistSession: false, autoRefreshToken: false }
+        });
+
+        const { data, error } = await tempClient.auth.signInWithPassword({
             email,
             password
         });
@@ -74,34 +80,6 @@ router.post('/login', async (req, res) => {
         });
     } catch (e) {
         res.status(401).json({ error: e.message });
-    }
-});
-
-// 3. Developer Auto-Login Bypass Route
-router.post('/autologin', async (req, res) => {
-    const email = process.env.DEFAULT_USER_EMAIL;
-    const password = process.env.DEFAULT_USER_PASSWORD;
-
-    if (!email || !password) {
-        return res.json({ autologin: false });
-    }
-
-    try {
-        const { data, error } = await supabaseService.supabase.auth.signInWithPassword({
-            email,
-            password
-        });
-
-        if (error) throw error;
-        const profile = await supabaseService.getProfile(data.user.id);
-
-        res.json({
-            user: data.user,
-            session: data.session,
-            profile
-        });
-    } catch (e) {
-        res.status(500).json({ error: e.message });
     }
 });
 

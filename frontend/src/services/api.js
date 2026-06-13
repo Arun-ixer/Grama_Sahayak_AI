@@ -31,7 +31,7 @@ export const api = {
     auth: {
         signup: async (data) => (await client.post('/auth/signup', data)).data,
         login: async (email, password) => (await client.post('/auth/login', { email, password })).data,
-        autologin: async () => (await client.post('/auth/autologin')).data,
+
         getProfile: async (userId) => (await client.get(`/auth/profile/${userId}`)).data,
         updateProfile: async (userId, data) => (await client.post(`/auth/profile/${userId}`, data)).data
     },

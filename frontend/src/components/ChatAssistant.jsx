@@ -321,8 +321,8 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
     // Optional: try to find a voice that specifically matches the lang
     const voices = window.speechSynthesis.getVoices();
     
-    // Better heuristic for finding Indian voices
-    const targetVoice = voices.find(v => {
+    // Better heuristic for finding a pleasant Indian voice
+    const matchingVoices = voices.filter(v => {
       const vLang = v.lang.replace('_', '-').toLowerCase();
       const vName = v.name.toLowerCase();
       
@@ -333,6 +333,27 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       
       return false;
     });
+
+    let targetVoice = null;
+    if (matchingVoices.length > 0) {
+      // 1. Prefer Google voices as they are much more natural and less robotic
+      targetVoice = matchingVoices.find(v => v.name.toLowerCase().includes('google'));
+      
+      // 2. If no Google voice, prefer female voices (e.g. Heera, Swara, or 'female' in name)
+      if (!targetVoice) {
+        targetVoice = matchingVoices.find(v => 
+          v.name.toLowerCase().includes('female') || 
+          v.name.toLowerCase().includes('heera') || 
+          v.name.toLowerCase().includes('swara')
+        );
+      }
+      
+      // 3. If the default voice is irritating, try to pick an alternative if multiple exist
+      if (!targetVoice) {
+        // If there are multiple, skip the very first one which is usually the default harsh voice
+        targetVoice = matchingVoices.length > 1 ? matchingVoices[matchingVoices.length - 1] : matchingVoices[0];
+      }
+    }
 
     if (targetVoice) {
       utterance.voice = targetVoice;

@@ -58,24 +58,7 @@ export default function App() {
         }
       }
 
-      // Bypass: Try Developer Auto-login if configured in backend .env
-      try {
-        const autoSession = await api.auth.autologin();
-        if (autoSession && autoSession.user) {
-          setUser(autoSession.user);
-          setUserProfile(autoSession.profile);
-          setLang(autoSession.profile?.preferred_language || 'en');
-          localStorage.setItem('gs_session', JSON.stringify({
-            user: autoSession.user,
-            profile: autoSession.profile,
-            access_token: autoSession.session?.access_token
-          }));
-        }
-      } catch (e) {
-        // Silently proceed to manual login if auto-login is not active
-      } finally {
-        setInitialized(true);
-      }
+      setInitialized(true);
     };
     checkSession();
   }, []);
@@ -174,40 +157,6 @@ export default function App() {
               className={`auth-tab-btn ${authTab === 'signup' ? 'active' : ''}`}
             >
               {t('signup')}
-            </button>
-          </div>
-
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <button 
-              onClick={async () => {
-                setLoading(true);
-                setError(null);
-                try {
-                  const data = await api.auth.autologin();
-                  if (data && data.user) {
-                    localStorage.setItem('gs_session', JSON.stringify({
-                      access_token: data.session?.access_token,
-                      user: data.user,
-                      profile: data.profile
-                    }));
-                    setUser(data.user);
-                    setUserProfile(data.profile);
-                    setLang(data.profile?.preferred_language || 'en');
-                    setInitialized(true);
-                  } else {
-                    setError('Auto-login failed. No default user configured.');
-                  }
-                } catch (e) {
-                  setError('Auto-login failed: ' + e.message);
-                } finally {
-                  setLoading(false);
-                }
-              }}
-              className="btn btn-secondary"
-              style={{ width: '100%', border: '1px dashed var(--accent-green)', background: 'rgba(21, 128, 61, 0.05)', fontWeight: 'bold' }}
-              disabled={loading}
-            >
-              🚀 Developer Quick Login
             </button>
           </div>
 

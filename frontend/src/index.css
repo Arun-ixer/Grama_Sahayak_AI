@@ -681,16 +681,51 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: 1fr;
   }
   .app-header {
-    padding: 12px 20px;
+    padding: 10px 15px;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     text-align: center;
   }
+  .header-logo-section {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .header-logo {
+    font-size: 1.8rem;
+  }
+  .header-title-block h1 {
+    font-size: 1.2rem;
+  }
   .main-wrapper {
-    padding: 20px 16px;
+    padding: 12px 10px;
+    min-height: calc(100vh - 100px);
+  }
+  .welcome-hero h2 {
+    font-size: 1.5rem;
   }
   .quick-suggestions-grid {
     grid-template-columns: 1fr !important;
+  }
+  .auth-card-panel {
+    padding: 24px 20px;
+  }
+  .nav-card {
+    padding: 20px;
+    gap: 12px;
+  }
+  .chat-msg-row {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+  .chat-input-container {
+    padding: 12px;
+  }
+  .chat-input-pill-box {
+    padding: 4px 10px;
+  }
+  .chat-view-container {
+    height: calc(100vh - 150px);
+    min-height: auto;
   }
 }
 
@@ -999,14 +1034,26 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .chat-interface-layout {
     flex-direction: column !important;
-    height: auto !important;
+    height: calc(100vh - 160px) !important;
+    gap: 12px !important;
   }
   .chat-history-sidebar {
     width: 100% !important;
-    height: 200px !important;
+    height: auto !important;
+    max-height: 140px !important;
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+  .chat-history-scroller {
+    max-height: 80px;
   }
   .chat-box-card {
-    height: 500px !important;
+    height: auto !important;
+    flex: 1 !important;
+    min-height: 300px;
+  }
+  .btn-block {
+    padding: 10px;
   }
 }
 
