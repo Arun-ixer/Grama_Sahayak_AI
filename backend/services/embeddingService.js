@@ -51,7 +51,7 @@ class EmbeddingService {
             }
         }
 
-        const apiKey = customApiKey || process.env.GEMINI_API_KEY;
+        const apiKey = customApiKey;
         if (!apiKey) {
             throw new Error('Gemini API Key is missing. Please configure it in backend settings.');
         }

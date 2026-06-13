@@ -44,7 +44,7 @@ class LLMService {
     }
 
     async _generateGemini(prompt, systemInstruction, customApiKey) {
-        const apiKey = customApiKey || process.env.GEMINI_API_KEY;
+        const apiKey = customApiKey;
         if (!apiKey) {
             throw new Error('Gemini API Key is missing. Please configure it in backend settings.');
         }
@@ -86,7 +86,7 @@ class LLMService {
     }
 
     async _generateGroq(prompt, systemInstruction, customApiKey) {
-        const apiKey = customApiKey || process.env.GROQ_API_KEY;
+        const apiKey = customApiKey;
         if (!apiKey) {
             throw new Error('Groq API Key is missing.');
         }
