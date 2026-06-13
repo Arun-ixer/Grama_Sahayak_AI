@@ -28,7 +28,9 @@ async function postWithRetry(url, payload, options = {}, retries = 5, delay = 10
 
 class LLMService {
     async generateResponse(prompt, systemInstruction = null, provider = 'gemini', customApiKey = null, ollamaUrl = null, ollamaModel = 'llama3') {
-        const prov = provider.toLowerCase();
+        let prov = provider.toLowerCase();
+        if (prov === 'grok') prov = 'groq'; // Backward compatibility for stale localStorage
+
         switch (prov) {
             case 'gemini':
                 return await this._generateGemini(prompt, systemInstruction, customApiKey);
