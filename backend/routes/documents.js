@@ -25,7 +25,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     }
 
     try {
-        console.log(`Processing upload: ${file.originalname} for User ${userId}`);
+        // console.log(`Processing upload: ${file.originalname} for User ${userId}`);
         
         // A. Upload file to Supabase Storage
         const fileUrl = await supabaseService.uploadDocumentToStorage(file.originalname, file.buffer);
@@ -44,10 +44,10 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
         // D. Create semantic chunks
         const chunks = pdfService.chunkText(rawText);
-        console.log(`PDF split into ${chunks.length} chunks. Generating embeddings...`);
+        // console.log(`PDF split into ${chunks.length} chunks. Generating embeddings...`);
 
         // E. Vectorize chunks in batch and insert into database
-        console.log(`Generating batch embeddings for ${chunks.length} chunks...`);
+        // console.log(`Generating batch embeddings for ${chunks.length} chunks...`);
         const embeddings = await embeddingService.getEmbeddingsBatch(chunks, apiKey || null);
         const dbChunks = chunks.map((chunk, index) => ({
             document_id: docId,

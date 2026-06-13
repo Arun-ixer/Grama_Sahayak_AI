@@ -186,6 +186,7 @@ export default function App() {
                   onChange={(e) => setLoginPassword(e.target.value)} 
                   className="input-field" 
                   required 
+                  autoComplete="current-password"
                 />
               </div>
 
@@ -225,6 +226,7 @@ export default function App() {
                   onChange={(e) => setSignupPassword(e.target.value)} 
                   className="input-field" 
                   required 
+                  autoComplete="new-password"
                 />
               </div>
 

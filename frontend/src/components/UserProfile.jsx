@@ -120,6 +120,7 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
             onChange={(e) => setChatApiKey(e.target.value)} 
             placeholder={`Paste your ${provider === 'gemini' ? 'Gemini' : provider === 'groq' ? 'Groq' : 'Ollama'} API Key here`}
             className="input-field" 
+            autoComplete="new-password"
           />
         </div>
 
@@ -135,6 +136,7 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
               onChange={(e) => setGeminiApiKey(e.target.value)} 
               placeholder="Paste your Gemini API Key here"
               className="input-field" 
+              autoComplete="new-password"
             />
           </div>
         )}
