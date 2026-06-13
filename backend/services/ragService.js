@@ -15,22 +15,27 @@ class RAGService {
         matchThreshold = 0.35,
         matchCount = 10
     ) {
-        // 1. Generate query embedding
-        let queryEmbedding;
-        try {
-            queryEmbedding = await embeddingService.getEmbedding(query, true, geminiApiKey);
-        } catch (e) {
-            console.error('RAG Error (Embedding creation):', e.message);
-            throw new Error(`Failed to vectorize search query: ${e.message}`);
-        }
+        let queryEmbedding = null;
+        let matchingChunks = [];
 
-        // 2. Retrieve top similarity chunks from Supabase
-        const matchingChunks = await supabaseService.matchDocumentChunks(
-            userId,
-            queryEmbedding,
-            matchThreshold,
-            matchCount
-        );
+        try {
+            if (geminiApiKey) {
+                queryEmbedding = await embeddingService.getEmbedding(query, true, geminiApiKey);
+                
+                // 2. Retrieve top similarity chunks from Supabase
+                matchingChunks = await supabaseService.matchDocumentChunks(
+                    userId,
+                    queryEmbedding,
+                    matchThreshold,
+                    matchCount
+                );
+            } else {
+                console.warn('Skipping RAG search: No Gemini API Key provided.');
+            }
+        } catch (e) {
+            console.warn('RAG Search bypassed due to error:', e.message);
+            // Proceed without context instead of crashing the chat
+        }
 
         // 3. Fetch document citations
         const citations = [];
