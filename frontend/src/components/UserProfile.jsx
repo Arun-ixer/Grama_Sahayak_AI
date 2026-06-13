@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
 
-export default function UserProfile({ userProfile, setUserProfile, lang, setLang, provider, setProvider, t }) {
+export default function UserProfile({ userProfile, setUserProfile, lang, setLang, provider, setProvider, customApiKey, setCustomApiKey, t }) {
   const [name, setName] = useState(userProfile?.name || '');
   const [state, setState] = useState(userProfile?.state || '');
   const [district, setDistrict] = useState(userProfile?.district || '');
@@ -110,8 +110,19 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
             <option value="grok">xAI Grok</option>
             <option value="ollama">Local Ollama</option>
           </select>
+        </div>
+
+        <div className="input-group">
+          <label className="input-label">Your API Key (Required)</label>
+          <input 
+            type="password" 
+            value={customApiKey} 
+            onChange={(e) => setCustomApiKey(e.target.value)} 
+            placeholder="Paste your Gemini or Grok API Key here"
+            className="input-field" 
+          />
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-            Requires API Key configured in backend environment variables.
+            We do not store this key on our servers. It is saved locally in your browser.
           </p>
         </div>
 

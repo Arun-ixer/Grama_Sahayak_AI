@@ -16,6 +16,7 @@ export default function App() {
 
   // LLM settings (under the hood default values)
   const [provider, setProvider] = useState(localStorage.getItem('gs_provider') || 'gemini');
+  const [customApiKey, setCustomApiKey] = useState(localStorage.getItem('gs_api_key') || '');
   const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
   const [ollamaModel, setOllamaModel] = useState('llama3');
 
@@ -404,6 +405,7 @@ export default function App() {
                 userProfile={userProfile}
                 lang={lang}
                 provider={provider}
+                customApiKey={customApiKey}
                 ollamaUrl={ollamaUrl}
                 ollamaModel={ollamaModel}
                 t={t}
@@ -415,6 +417,7 @@ export default function App() {
                 userProfile={userProfile}
                 lang={lang}
                 provider={provider}
+                customApiKey={customApiKey}
                 ollamaUrl={ollamaUrl}
                 ollamaModel={ollamaModel}
                 t={t}
@@ -424,6 +427,7 @@ export default function App() {
             {activeView === 'dashboard' && (
               <DocumentDashboard 
                 userProfile={userProfile}
+                customApiKey={customApiKey}
                 t={t}
               />
             )}
@@ -436,6 +440,8 @@ export default function App() {
                 setLang={setLang}
                 provider={provider}
                 setProvider={(p) => { setProvider(p); localStorage.setItem('gs_provider', p); }}
+                customApiKey={customApiKey}
+                setCustomApiKey={(k) => { setCustomApiKey(k); localStorage.setItem('gs_api_key', k); }}
                 t={t}
               />
             )}

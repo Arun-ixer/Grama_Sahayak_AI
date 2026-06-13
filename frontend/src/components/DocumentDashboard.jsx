@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { UploadCloud, Trash, FileText, Calendar } from 'lucide-react';
 import { api } from '../services/api';
 
-export default function DocumentDashboard({ userProfile, t }) {
+export default function DocumentDashboard({ userProfile, customApiKey, t }) {
   const [documents, setDocuments] = useState([]);
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -41,7 +41,7 @@ export default function DocumentDashboard({ userProfile, t }) {
     setMessage({ text: t('processing_pdf'), type: 'info' });
 
     try {
-      await api.documents.upload(userProfile.id, file);
+      await api.documents.upload(userProfile.id, file, customApiKey);
       setMessage({ text: t('upload_success'), type: 'success' });
       setFile(null);
       // Reset input element
