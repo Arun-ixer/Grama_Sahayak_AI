@@ -15,7 +15,7 @@ export default function App() {
   const [activeView, setActiveView] = useState('home');
 
   // LLM settings (under the hood default values)
-  const [provider, setProvider] = useState('gemini');
+  const [provider, setProvider] = useState(localStorage.getItem('gs_provider') || 'gemini');
   const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
   const [ollamaModel, setOllamaModel] = useState('llama3');
 
@@ -434,6 +434,8 @@ export default function App() {
                 setUserProfile={setUserProfile}
                 lang={lang}
                 setLang={setLang}
+                provider={provider}
+                setProvider={(p) => { setProvider(p); localStorage.setItem('gs_provider', p); }}
                 t={t}
               />
             )}

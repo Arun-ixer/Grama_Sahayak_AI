@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
 
-export default function UserProfile({ userProfile, setUserProfile, lang, setLang, t }) {
+export default function UserProfile({ userProfile, setUserProfile, lang, setLang, provider, setProvider, t }) {
   const [name, setName] = useState(userProfile?.name || '');
   const [state, setState] = useState(userProfile?.state || '');
   const [district, setDistrict] = useState(userProfile?.district || '');
@@ -97,6 +97,22 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
             <option value="hi">Hindi (हिन्दी)</option>
             <option value="te">Telugu (తెలుగు)</option>
           </select>
+        </div>
+
+        <div className="input-group">
+          <label className="input-label">AI Provider</label>
+          <select 
+            value={provider} 
+            onChange={(e) => setProvider(e.target.value)} 
+            className="input-field"
+          >
+            <option value="gemini">Google Gemini</option>
+            <option value="grok">xAI Grok</option>
+            <option value="ollama">Local Ollama</option>
+          </select>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+            Requires API Key configured in backend environment variables.
+          </p>
         </div>
 
         {error && <div className="error-banner">{error}</div>}

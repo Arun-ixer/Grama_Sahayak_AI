@@ -31,6 +31,8 @@ class LLMService {
         const prov = provider.toLowerCase();
         if (prov === 'gemini') {
             return this._generateGemini(prompt, systemInstruction, customApiKey);
+        } else if (prov === 'grok') {
+            return this._generateGrok(prompt, systemInstruction, customApiKey);
         } else if (prov === 'ollama') {
             return this._generateOllama(prompt, systemInstruction, ollamaUrl, ollamaModel);
         } else {
@@ -77,6 +79,44 @@ class LLMService {
         } catch (e) {
             console.error('Gemini Generation Error:', e.message);
             throw new Error(`Google API request failed: ${e.message}. If you are behind a corporate proxy, check HTTP_PROXY / HTTPS_PROXY variables.`);
+        }
+    }
+
+    async _generateGrok(prompt, systemInstruction, customApiKey) {
+        const apiKey = customApiKey || process.env.GROK_API_KEY || process.env.XAI_API_KEY;
+        if (!apiKey) {
+            throw new Error('Grok (xAI) API Key is missing.');
+        }
+
+        const messages = [];
+        if (systemInstruction) {
+            messages.push({ role: 'system', content: systemInstruction });
+        }
+        messages.push({ role: 'user', content: prompt });
+
+        const url = 'https://api.x.ai/v1/chat/completions';
+        const payload = {
+            messages,
+            model: 'grok-beta',
+            stream: false
+        };
+
+        try {
+            const response = await postWithRetry(url, payload, {
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                timeout: 30000
+            });
+
+            if (response.data && response.data.choices && response.data.choices[0] && response.data.choices[0].message) {
+                return response.data.choices[0].message.content;
+            }
+            throw new Error('Invalid generation response structure from Grok API');
+        } catch (e) {
+            console.error('Grok Generation Error:', e.message);
+            throw new Error(`Grok API request failed: ${e.response?.data?.error?.message || e.message}`);
         }
     }
 
