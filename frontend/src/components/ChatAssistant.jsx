@@ -101,7 +101,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       await api.chats.renameChat(chatId, userProfile.id, editTitle.trim());
       setChats(prev => prev.map(c => c.id === chatId ? { ...c, title: editTitle.trim() } : c));
     } catch (e) {
-      console.error('Failed to rename chat:', e);
+      // console.('Failed to rename chat:', e);
       alert('Failed to rename chat.');
     } finally {
       setEditingChatId(null);
@@ -136,7 +136,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
         setMessages([]);
       }
     } catch (e) {
-      console.error('Failed to delete chat:', e);
+      // console.('Failed to delete chat:', e);
       alert('Failed to delete chat.');
     }
   };
@@ -165,7 +165,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       };
       
       rec.onerror = (e) => {
-        console.error('Speech recognition error:', e);
+        // console.('Speech recognition error:', e);
         setIsListening(false);
       };
       
@@ -188,7 +188,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       try {
         recognitionRef.current.start();
       } catch (err) {
-        console.error('Speech recognition start failed:', err);
+        // console.('Speech recognition start failed:', err);
       }
     }
   };
@@ -198,7 +198,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       const list = await api.chats.getChats(userProfile.id);
       setChats(list);
     } catch (e) {
-      console.error('Failed to get chats:', e);
+      // console.('Failed to get chats:', e);
     }
   };
 
@@ -208,7 +208,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       const msgs = await api.chats.getMessages(chatId);
       setMessages(msgs);
     } catch (e) {
-      console.error('Failed to load messages:', e);
+      // console.('Failed to load messages:', e);
     }
   };
 
@@ -272,7 +272,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       // Reload entire message history to ensure Supabase timestamps align
       loadMessages(chatId);
     } catch (err) {
-      console.error(err);
+      // console.(err);
       const errMsg = err.response?.data?.error || err.message || 'Unknown error';
       alert(`Failed to get response: ${errMsg}`);
     } finally {
@@ -361,7 +361,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
       if (detectedBaseLang !== 'en') {
         alert(`Your browser/device does not have a ${detectedBaseLang === 'te' ? 'Telugu' : 'Hindi'} voice installed. Please use Google Chrome or install the language pack in Windows Settings.`);
       }
-      console.warn(`No native voice found for ${bcpLang}. Using default.`);
+      // console.(`No native voice found for ${bcpLang}. Using default.`);
     }
 
     utterance.onend = () => {

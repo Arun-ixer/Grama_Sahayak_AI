@@ -30,7 +30,7 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
       setLang(prefLang);
       setSuccess(true);
     } catch (err) {
-      console.error(err);
+      // console.(err);
       setError(err.response?.data?.error || 'Failed to update profile.');
     } finally {
       setSaving(false);

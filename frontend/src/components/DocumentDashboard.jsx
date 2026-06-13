@@ -13,7 +13,7 @@ export default function DocumentDashboard({ userProfile, t }) {
       const docs = await api.documents.getDocuments(userProfile.id);
       setDocuments(docs);
     } catch (e) {
-      console.error('Failed to fetch documents:', e);
+      // console.('Failed to fetch documents:', e);
     }
   };
 
@@ -49,7 +49,7 @@ export default function DocumentDashboard({ userProfile, t }) {
       if (inputEl) inputEl.value = '';
       fetchDocuments();
     } catch (err) {
-      console.error(err);
+      // console.(err);
       setMessage({ 
         text: err.response?.data?.error || 'Failed to process document. Verify Supabase tables and Gemini key.', 
         type: 'error' 
@@ -68,7 +68,7 @@ export default function DocumentDashboard({ userProfile, t }) {
       fetchDocuments();
       setMessage({ text: 'Document deleted successfully.', type: 'success' });
     } catch (e) {
-      console.error('Delete error:', e);
+      // console.('Delete error:', e);
       setMessage({ text: 'Failed to delete document.', type: 'error' });
     }
   };

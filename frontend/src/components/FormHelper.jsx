@@ -38,7 +38,7 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
       };
       
       rec.onerror = (e) => {
-        console.error('Speech recognition error:', e);
+        // console.('Speech recognition error:', e);
         setIsListening(false);
       };
       
@@ -60,7 +60,7 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
       try {
         recognitionRef.current.start();
       } catch (err) {
-        console.error('Speech recognition start failed:', err);
+        // console.('Speech recognition start failed:', err);
       }
     }
   };
@@ -75,7 +75,7 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
           setSelectedFormId(list[0].id);
         }
       } catch (e) {
-        console.error('Failed to get form list:', e);
+        // console.('Failed to get form list:', e);
       }
     };
     fetchForms();
@@ -95,7 +95,7 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
         setFormValues(initialValues);
         setDraftText('');
       } catch (e) {
-        console.error('Failed to load form metadata details:', e);
+        // console.('Failed to load form metadata details:', e);
       }
     };
     fetchDetails();
@@ -126,7 +126,7 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
       setFormValues(updatedValues);
       setAiPrompt('');
     } catch (err) {
-      console.error(err);
+      // console.(err);
       alert('Failed to extract slot details using AI. Make sure LLM keys are valid.');
     } finally {
       setAiFilling(false);
@@ -146,7 +146,7 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
       });
       setDraftText(res.draft);
     } catch (err) {
-      console.error(err);
+      // console.(err);
       alert('Failed to generate draft.');
     } finally {
       setDrafting(false);

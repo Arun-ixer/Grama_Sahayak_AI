@@ -20,7 +20,7 @@ client.interceptors.request.use((config) => {
                 config.headers.Authorization = `Bearer ${parsed.access_token}`;
             }
         } catch (e) {
-            console.error('Session token parse error:', e);
+            // console.('Session token parse error:', e);
         }
     }
     return config;

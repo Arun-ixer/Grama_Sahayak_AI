@@ -54,7 +54,7 @@ export default function App() {
             return;
           }
         } catch (e) {
-          console.error('Session parse error:', e);
+          // console.('Session parse error:', e);
         }
       }
 
@@ -78,7 +78,7 @@ export default function App() {
         access_token: res.session?.access_token
       }));
     } catch (err) {
-      console.error(err);
+      // console.(err);
       setError(err.response?.data?.error || 'Invalid credentials or connection error.');
     } finally {
       setLoading(false);
@@ -112,7 +112,7 @@ export default function App() {
       setSignupDistrict('');
       setSignupOccupation('');
     } catch (err) {
-      console.error(err);
+      // console.(err);
       setError(err.response?.data?.error || 'Signup failed.');
     } finally {
       setLoading(false);
@@ -296,7 +296,7 @@ export default function App() {
 
         <div className="header-actions">
           {/* Quick Language Toggle Buttons */}
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <button 
               className={`header-lang-btn ${lang === 'en' ? 'active' : ''}`}
               onClick={() => setLang('en')}
