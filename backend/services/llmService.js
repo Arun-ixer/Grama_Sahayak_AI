@@ -100,7 +100,7 @@ class LLMService {
         const url = 'https://api.groq.com/openai/v1/chat/completions';
         const payload = {
             messages,
-            model: 'llama3-8b-8192',
+            model: 'llama-3.1-8b-instant',
             stream: false
         };
 
@@ -118,8 +118,9 @@ class LLMService {
             }
             throw new Error('Invalid generation response structure from Groq API');
         } catch (e) {
-            console.error('Groq Generation Error Full response:', e.response?.data);
-            const errMsg = e.response?.data?.error?.message || typeof e.response?.data?.error === 'string' ? e.response?.data?.error : e.message;
+            console.error('Groq Generation Error Full response:', e.response?.data || e.message);
+            const errData = e.response?.data?.error;
+            const errMsg = errData?.message || (typeof errData === 'string' ? errData : e.message);
             throw new Error(`Groq API request failed: ${errMsg}`);
         }
     }
