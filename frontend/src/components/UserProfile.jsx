@@ -24,7 +24,10 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
         state,
         district,
         occupation,
-        preferredLanguage: prefLang
+        preferredLanguage: prefLang,
+        provider,
+        chatApiKey,
+        geminiApiKey
       });
       setUserProfile(updated);
       setLang(prefLang);

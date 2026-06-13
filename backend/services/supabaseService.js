@@ -36,7 +36,7 @@ class SupabaseService {
         }
     }
 
-    async upsertProfile(userId, name, state, district, occupation, preferredLanguage) {
+    async upsertProfile(userId, name, state, district, occupation, preferredLanguage, provider, chatApiKey, geminiApiKey) {
         if (!this.isConfigured()) throw new Error('Supabase not configured');
         const profileData = {
             id: userId,
@@ -44,7 +44,10 @@ class SupabaseService {
             state,
             district,
             occupation,
-            preferred_language: preferredLanguage
+            preferred_language: preferredLanguage,
+            provider,
+            chat_api_key: chatApiKey,
+            gemini_api_key: geminiApiKey
         };
         try {
             const { data, error } = await supabase

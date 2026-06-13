@@ -22,14 +22,16 @@ router.post('/signup', async (req, res) => {
         if (error) throw error;
         if (!data.user) throw new Error('Failed to create account.');
 
-        // Initialize user database profile
         const profile = await supabaseService.upsertProfile(
             data.user.id,
             name,
             state || '',
             district || '',
             occupation || '',
-            preferredLanguage || 'en'
+            preferredLanguage || 'en',
+            'groq', // Default provider
+            null,
+            null
         );
 
         res.status(201).json({ user: data.user, profile });
@@ -60,7 +62,6 @@ router.post('/login', async (req, res) => {
         if (error) throw error;
         if (!data.user) throw new Error('Authentication failed.');
 
-        // Fetch or create profile stub
         let profile = await supabaseService.getProfile(data.user.id);
         if (!profile) {
             profile = await supabaseService.upsertProfile(
@@ -69,7 +70,10 @@ router.post('/login', async (req, res) => {
                 '',
                 '',
                 '',
-                'en'
+                'en',
+                'groq',
+                null,
+                null
             );
         }
 
@@ -97,10 +101,9 @@ router.get('/profile/:id', async (req, res) => {
     }
 });
 
-// 5. Update Profile Route
 router.post('/profile/:id', async (req, res) => {
     const userId = req.params.id;
-    const { name, state, district, occupation, preferredLanguage } = req.body;
+    const { name, state, district, occupation, preferredLanguage, provider, chatApiKey, geminiApiKey } = req.body;
 
     try {
         const profile = await supabaseService.upsertProfile(
@@ -109,7 +112,10 @@ router.post('/profile/:id', async (req, res) => {
             state,
             district,
             occupation,
-            preferredLanguage
+            preferredLanguage,
+            provider,
+            chatApiKey,
+            geminiApiKey
         );
         res.json(profile);
     } catch (e) {

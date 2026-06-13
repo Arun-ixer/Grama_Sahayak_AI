@@ -15,9 +15,9 @@ export default function App() {
   const [activeView, setActiveView] = useState('home');
 
   // LLM settings (under the hood default values)
-  const [provider, setProvider] = useState(localStorage.getItem('gs_provider') || 'gemini');
-  const [chatApiKey, setChatApiKey] = useState(localStorage.getItem('gs_chat_key') || '');
-  const [geminiApiKey, setGeminiApiKey] = useState(localStorage.getItem('gs_gemini_key') || '');
+  const [provider, setProvider] = useState('gemini');
+  const [chatApiKey, setChatApiKey] = useState('');
+  const [geminiApiKey, setGeminiApiKey] = useState('');
   const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
   const [ollamaModel, setOllamaModel] = useState('llama3');
 
@@ -52,6 +52,12 @@ export default function App() {
             setUser(parsed.user);
             setUserProfile(parsed.profile);
             setLang(parsed.profile?.preferred_language || 'en');
+            
+            // Load API keys securely from DB profile
+            if (parsed.profile?.provider) setProvider(parsed.profile.provider);
+            if (parsed.profile?.chat_api_key) setChatApiKey(parsed.profile.chat_api_key);
+            if (parsed.profile?.gemini_api_key) setGeminiApiKey(parsed.profile.gemini_api_key);
+            
             setInitialized(true);
             return;
           }
@@ -74,6 +80,11 @@ export default function App() {
       setUser(res.user);
       setUserProfile(res.profile);
       setLang(res.profile?.preferred_language || 'en');
+      
+      // Load API keys securely from DB profile
+      if (res.profile?.provider) setProvider(res.profile.provider);
+      if (res.profile?.chat_api_key) setChatApiKey(res.profile.chat_api_key);
+      if (res.profile?.gemini_api_key) setGeminiApiKey(res.profile.gemini_api_key);
       localStorage.setItem('gs_session', JSON.stringify({
         user: res.user,
         profile: res.profile,
@@ -444,11 +455,11 @@ export default function App() {
                 lang={lang}
                 setLang={setLang}
                 provider={provider}
-                setProvider={(p) => { setProvider(p); localStorage.setItem('gs_provider', p); }}
+                setProvider={setProvider}
                 chatApiKey={chatApiKey}
-                setChatApiKey={(k) => { setChatApiKey(k); localStorage.setItem('gs_chat_key', k); }}
+                setChatApiKey={setChatApiKey}
                 geminiApiKey={geminiApiKey}
-                setGeminiApiKey={(k) => { setGeminiApiKey(k); localStorage.setItem('gs_gemini_key', k); }}
+                setGeminiApiKey={setGeminiApiKey}
                 t={t}
               />
             )}
