@@ -278,7 +278,13 @@ export default function ChatAssistant({ userProfile, lang, provider, customApiKe
     } catch (err) {
       // console.(err);
       const errMsg = err.response?.data?.error || err.message || 'Unknown error';
-      alert(`Failed to get response: ${errMsg}`);
+      const errorObj = {
+        role: 'assistant',
+        content: `⚠️ **Connection Error:** ${errMsg}. \n\n*Please ensure you have provided valid API keys in your Profile settings.*`,
+        created_at: new Date().toISOString(),
+        id: 'err-' + Date.now()
+      };
+      setMessages(prev => [...prev, errorObj]);
     } finally {
       setLoading(false);
     }

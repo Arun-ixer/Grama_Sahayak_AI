@@ -13,6 +13,7 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
   
   const [draftText, setDraftText] = useState('');
   const [drafting, setDrafting] = useState(false);
+  const [error, setError] = useState(null);
 
   // Speech recognition state
   const [isListening, setIsListening] = useState(false);
@@ -113,6 +114,7 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
     if (!aiPrompt.trim()) return;
 
     setAiFilling(true);
+    setError(null);
     try {
       const updatedValues = await api.forms.extract({
         formId: selectedFormId,
@@ -128,8 +130,8 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
       setFormValues(updatedValues);
       setAiPrompt('');
     } catch (err) {
-      // console.(err);
-      alert('Failed to extract slot details using AI. Make sure LLM keys are valid.');
+      const errMsg = err.response?.data?.error || err.message || 'Unknown error';
+      setError(`Failed to extract slot details: ${errMsg}. Make sure your API keys are valid.`);
     } finally {
       setAiFilling(false);
     }
@@ -137,6 +139,7 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
 
   const handleGenerateDraft = async () => {
     setDrafting(true);
+    setError(null);
     try {
       const res = await api.forms.generateDraft({
         formId: selectedFormId,
@@ -150,8 +153,8 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
       });
       setDraftText(res.draft);
     } catch (err) {
-      // console.(err);
-      alert('Failed to generate draft.');
+      const errMsg = err.response?.data?.error || err.message || 'Unknown error';
+      setError(`Failed to generate draft: ${errMsg}. Make sure your API keys are valid.`);
     } finally {
       setDrafting(false);
     }
@@ -183,6 +186,12 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
     <div className="form-helper-view-container">
       <h2 className="view-title">📝 {t('form_helper_title')}</h2>
       <hr className="divider" />
+
+      {error && (
+        <div style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', padding: '12px', borderRadius: '8px', marginBottom: '20px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+          ⚠️ {error}
+        </div>
+      )}
 
       {/* Select Form */}
       <div className="premium-card">
