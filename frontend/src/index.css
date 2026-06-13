@@ -935,6 +935,10 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 520px;
 }
 
+.mobile-chat-sidebar-toggle {
+  display: none;
+}
+
 .chat-history-sidebar {
   width: 280px;
   display: flex;
@@ -1055,16 +1059,40 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column !important;
     height: calc(100vh - 160px) !important;
     gap: 12px !important;
+    position: relative;
   }
   .chat-history-sidebar {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 140px !important;
-    padding: 12px !important;
-    gap: 10px !important;
+    position: absolute;
+    left: -120%; /* hidden by default */
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    width: 280px !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    transition: left 0.3s ease;
+    background: white;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
   }
-  .chat-history-scroller {
-    max-height: 80px;
+  .chat-interface-layout.sidebar-open .chat-history-sidebar {
+    left: 0;
+  }
+  .mobile-sidebar-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 40;
+    border-radius: var(--border-radius-lg);
+  }
+  .mobile-chat-sidebar-toggle {
+    display: flex !important;
+  }
+  .chat-main-window {
+    width: 100% !important;
+    height: 100% !important;
   }
   .chat-box-card {
     height: auto !important;

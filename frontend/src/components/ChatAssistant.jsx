@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { MessageSquare, Send, Plus, Download, Mic, Pencil, Trash2, Check, X, Volume2, VolumeX } from 'lucide-react';
+import { MessageSquare, Send, Plus, Download, Mic, Pencil, Trash2, Check, X, Volume2, VolumeX, Menu } from 'lucide-react';
 import { api } from '../services/api';
 
 const renderMessageContent = (content) => {
@@ -86,6 +86,9 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
   
   // TTS State
   const [speakingMsgId, setSpeakingMsgId] = useState(null);
+
+  // Mobile Sidebar State
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const handleRenameChat = (chatId, currentTitle) => {
     setEditingChatId(chatId);
@@ -404,17 +407,28 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
   const handleNewChat = () => {
     setActiveChatId('');
     setMessages([]);
+    setIsMobileSidebarOpen(false);
   };
 
   const activeChatTitle = chats.find(c => c.id === activeChatId)?.title || 'Chat Session';
 
   return (
     <div className="chat-view-container">
-      <h2 className="view-title">💬 {t('nav_chat')}</h2>
-      <hr className="divider" />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+        <h2 className="view-title" style={{ margin: 0, padding: 0 }}>💬 {t('nav_chat')}</h2>
+        <button 
+          className="mobile-chat-sidebar-toggle btn btn-secondary" 
+          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+          style={{ padding: '6px 10px' }}
+        >
+          <Menu size={20} />
+        </button>
+      </div>
+      <hr className="divider" style={{ marginTop: 0 }} />
 
-      <div className="chat-interface-layout">
+      <div className={`chat-interface-layout ${isMobileSidebarOpen ? 'sidebar-open' : ''}`}>
         {/* Left Side: Sessions Sidebar */}
+        {isMobileSidebarOpen && <div className="mobile-sidebar-backdrop" onClick={() => setIsMobileSidebarOpen(false)}></div>}
         <div className="chat-history-sidebar">
           <button onClick={handleNewChat} className="btn btn-secondary btn-block" style={{ padding: '12px', fontWeight: '700' }}>
             <Plus size={16} style={{ marginRight: '4px' }} />
@@ -468,7 +482,7 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
                   ) : (
                     <>
                       <button 
-                        onClick={() => setActiveChatId(c.id)}
+                        onClick={() => { setActiveChatId(c.id); setIsMobileSidebarOpen(false); }}
                         className="chat-history-item-btn"
                         title={c.title}
                       >
