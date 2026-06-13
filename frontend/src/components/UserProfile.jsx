@@ -107,7 +107,7 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
             className="input-field"
           >
             <option value="gemini">Google Gemini</option>
-            <option value="grok">xAI Grok</option>
+            <option value="groq">Groq LPU</option>
             <option value="ollama">Local Ollama</option>
           </select>
         </div>
@@ -118,7 +118,7 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
             type="password" 
             value={chatApiKey} 
             onChange={(e) => setChatApiKey(e.target.value)} 
-            placeholder={`Paste your ${provider === 'gemini' ? 'Gemini' : provider === 'grok' ? 'Grok' : 'Ollama'} API Key here`}
+            placeholder={`Paste your ${provider === 'gemini' ? 'Gemini' : provider === 'groq' ? 'Groq' : 'Ollama'} API Key here`}
             className="input-field" 
           />
         </div>

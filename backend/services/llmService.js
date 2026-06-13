@@ -13,7 +13,7 @@ async function postWithRetry(url, payload, options = {}, retries = 5, delay = 10
             const errorMsg = e.response?.data?.error?.message || '';
             const isQuotaExceeded = status === 429 && errorMsg.includes('Quota exceeded');
             const isTransient = !isQuotaExceeded && (!status || status === 429 || (status >= 500 && status <= 504));
-            
+
             if (isTransient && i < retries - 1) {
                 const waitTime = status === 429 ? Math.max(delay, 5000) : delay;
                 console.warn(`Transient API error (${status || e.message}) generating text response. Retrying in ${waitTime}ms... (Attempt ${i + 1}/${retries})`);
@@ -29,14 +29,15 @@ async function postWithRetry(url, payload, options = {}, retries = 5, delay = 10
 class LLMService {
     async generateResponse(prompt, systemInstruction = null, provider = 'gemini', customApiKey = null, ollamaUrl = null, ollamaModel = 'llama3') {
         const prov = provider.toLowerCase();
-        if (prov === 'gemini') {
-            return this._generateGemini(prompt, systemInstruction, customApiKey);
-        } else if (prov === 'grok') {
-            return this._generateGrok(prompt, systemInstruction, customApiKey);
-        } else if (prov === 'ollama') {
-            return this._generateOllama(prompt, systemInstruction, ollamaUrl, ollamaModel);
-        } else {
-            throw new Error(`Unsupported LLM provider: ${provider}`);
+        switch (prov) {
+            case 'gemini':
+                return await this._generateGemini(prompt, systemInstruction, customApiKey);
+            case 'groq':
+                return await this._generateGroq(prompt, systemInstruction, customApiKey);
+            case 'ollama':
+                return await this._generateOllama(prompt, systemInstruction, ollamaUrl, ollamaModel);
+            default:
+                throw new Error(`Unsupported LLM provider: ${provider}`);
         }
     }
 
@@ -48,7 +49,7 @@ class LLMService {
 
         try {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
-            
+
             const payload = {
                 contents: [{
                     role: 'user',
@@ -63,7 +64,7 @@ class LLMService {
             }
 
             const response = await postWithRetry(url, payload, { timeout: 30000 });
-            
+
             if (
                 response.data &&
                 response.data.candidates &&
@@ -74,7 +75,7 @@ class LLMService {
             ) {
                 return response.data.candidates[0].content.parts[0].text;
             }
-            
+
             throw new Error('Invalid generation response structure from Google API');
         } catch (e) {
             console.error('Gemini Generation Error:', e.message);
@@ -82,10 +83,10 @@ class LLMService {
         }
     }
 
-    async _generateGrok(prompt, systemInstruction, customApiKey) {
-        const apiKey = customApiKey || process.env.GROK_API_KEY || process.env.XAI_API_KEY;
+    async _generateGroq(prompt, systemInstruction, customApiKey) {
+        const apiKey = customApiKey || process.env.GROQ_API_KEY;
         if (!apiKey) {
-            throw new Error('Grok (xAI) API Key is missing.');
+            throw new Error('Groq API Key is missing.');
         }
 
         const messages = [];
@@ -94,10 +95,10 @@ class LLMService {
         }
         messages.push({ role: 'user', content: prompt });
 
-        const url = 'https://api.x.ai/v1/chat/completions';
+        const url = 'https://api.groq.com/openai/v1/chat/completions';
         const payload = {
             messages,
-            model: 'grok-4',
+            model: 'llama3-8b-8192',
             stream: false
         };
 
@@ -113,11 +114,11 @@ class LLMService {
             if (response.data && response.data.choices && response.data.choices[0] && response.data.choices[0].message) {
                 return response.data.choices[0].message.content;
             }
-            throw new Error('Invalid generation response structure from Grok API');
+            throw new Error('Invalid generation response structure from Groq API');
         } catch (e) {
-            console.error('Grok Generation Error Full response:', e.response?.data);
+            console.error('Groq Generation Error Full response:', e.response?.data);
             const errMsg = e.response?.data?.error?.message || typeof e.response?.data?.error === 'string' ? e.response?.data?.error : e.message;
-            throw new Error(`Grok API request failed: ${errMsg}`);
+            throw new Error(`Groq API request failed: ${errMsg}`);
         }
     }
 
