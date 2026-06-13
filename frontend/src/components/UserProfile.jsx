@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
 
-export default function UserProfile({ userProfile, setUserProfile, lang, setLang, provider, setProvider, customApiKey, setCustomApiKey, t }) {
+export default function UserProfile({ userProfile, setUserProfile, lang, setLang, provider, setProvider, chatApiKey, setChatApiKey, geminiApiKey, setGeminiApiKey, t }) {
   const [name, setName] = useState(userProfile?.name || '');
   const [state, setState] = useState(userProfile?.state || '');
   const [district, setDistrict] = useState(userProfile?.district || '');
@@ -113,16 +113,35 @@ export default function UserProfile({ userProfile, setUserProfile, lang, setLang
         </div>
 
         <div className="input-group">
-          <label className="input-label">Your API Key (Required)</label>
+          <label className="input-label">Chat API Key (Required)</label>
           <input 
             type="password" 
-            value={customApiKey} 
-            onChange={(e) => setCustomApiKey(e.target.value)} 
-            placeholder="Paste your Gemini or Grok API Key here"
+            value={chatApiKey} 
+            onChange={(e) => setChatApiKey(e.target.value)} 
+            placeholder={`Paste your ${provider === 'gemini' ? 'Gemini' : provider === 'grok' ? 'Grok' : 'Ollama'} API Key here`}
             className="input-field" 
           />
+        </div>
+
+        {provider !== 'gemini' && (
+          <div className="input-group" style={{ background: 'rgba(21, 128, 61, 0.05)', padding: '16px', borderRadius: '8px', border: '1px dashed var(--accent-green)' }}>
+            <label className="input-label" style={{ color: 'var(--accent-green)' }}>Google Gemini API Key (Required for PDF Uploads)</label>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '8px', marginTop: '-4px' }}>
+              Even though you are using {provider} for chatting, the system strictly relies on Google Gemini's Embedding models to process and read your PDF documents.
+            </p>
+            <input 
+              type="password" 
+              value={geminiApiKey} 
+              onChange={(e) => setGeminiApiKey(e.target.value)} 
+              placeholder="Paste your Gemini API Key here"
+              className="input-field" 
+            />
+          </div>
+        )}
+
+        <div className="input-group">
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-            We do not store this key on our servers. It is saved locally in your browser.
+            We do not store your API keys on our servers. They are saved securely in your browser's local storage.
           </p>
         </div>
 

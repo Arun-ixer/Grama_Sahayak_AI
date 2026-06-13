@@ -16,7 +16,8 @@ export default function App() {
 
   // LLM settings (under the hood default values)
   const [provider, setProvider] = useState(localStorage.getItem('gs_provider') || 'gemini');
-  const [customApiKey, setCustomApiKey] = useState(localStorage.getItem('gs_api_key') || '');
+  const [chatApiKey, setChatApiKey] = useState(localStorage.getItem('gs_chat_key') || '');
+  const [geminiApiKey, setGeminiApiKey] = useState(localStorage.getItem('gs_gemini_key') || '');
   const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
   const [ollamaModel, setOllamaModel] = useState('llama3');
 
@@ -405,7 +406,7 @@ export default function App() {
                 userProfile={userProfile}
                 lang={lang}
                 provider={provider}
-                customApiKey={customApiKey}
+                customApiKey={chatApiKey}
                 ollamaUrl={ollamaUrl}
                 ollamaModel={ollamaModel}
                 t={t}
@@ -417,7 +418,7 @@ export default function App() {
                 userProfile={userProfile}
                 lang={lang}
                 provider={provider}
-                customApiKey={customApiKey}
+                customApiKey={chatApiKey}
                 ollamaUrl={ollamaUrl}
                 ollamaModel={ollamaModel}
                 t={t}
@@ -427,7 +428,7 @@ export default function App() {
             {activeView === 'dashboard' && (
               <DocumentDashboard 
                 userProfile={userProfile}
-                customApiKey={customApiKey}
+                customApiKey={provider === 'gemini' ? chatApiKey : geminiApiKey}
                 t={t}
               />
             )}
@@ -440,8 +441,10 @@ export default function App() {
                 setLang={setLang}
                 provider={provider}
                 setProvider={(p) => { setProvider(p); localStorage.setItem('gs_provider', p); }}
-                customApiKey={customApiKey}
-                setCustomApiKey={(k) => { setCustomApiKey(k); localStorage.setItem('gs_api_key', k); }}
+                chatApiKey={chatApiKey}
+                setChatApiKey={(k) => { setChatApiKey(k); localStorage.setItem('gs_chat_key', k); }}
+                geminiApiKey={geminiApiKey}
+                setGeminiApiKey={(k) => { setGeminiApiKey(k); localStorage.setItem('gs_gemini_key', k); }}
                 t={t}
               />
             )}
