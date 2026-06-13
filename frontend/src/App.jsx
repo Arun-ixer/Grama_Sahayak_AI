@@ -407,6 +407,7 @@ export default function App() {
                 lang={lang}
                 provider={provider}
                 customApiKey={chatApiKey}
+                geminiApiKey={geminiApiKey}
                 ollamaUrl={ollamaUrl}
                 ollamaModel={ollamaModel}
                 t={t}
@@ -419,6 +420,7 @@ export default function App() {
                 lang={lang}
                 provider={provider}
                 customApiKey={chatApiKey}
+                geminiApiKey={geminiApiKey}
                 ollamaUrl={ollamaUrl}
                 ollamaModel={ollamaModel}
                 t={t}

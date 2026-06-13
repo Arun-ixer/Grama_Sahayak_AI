@@ -9,6 +9,7 @@ class RAGService {
         lang = 'en',
         provider = 'gemini',
         customApiKey = null,
+        geminiApiKey = null,
         ollamaUrl = null,
         ollamaModel = 'llama3',
         matchThreshold = 0.35,
@@ -17,7 +18,7 @@ class RAGService {
         // 1. Generate query embedding
         let queryEmbedding;
         try {
-            queryEmbedding = await embeddingService.getEmbedding(query, true, customApiKey);
+            queryEmbedding = await embeddingService.getEmbedding(query, true, geminiApiKey);
         } catch (e) {
             console.error('RAG Error (Embedding creation):', e.message);
             throw new Error(`Failed to vectorize search query: ${e.message}`);

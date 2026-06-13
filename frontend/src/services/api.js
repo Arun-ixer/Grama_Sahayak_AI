@@ -61,13 +61,14 @@ export const api = {
         deleteChat: async (chatId, userId) => (await client.delete(`/chats/${chatId}/user/${userId}`)).data,
         renameChat: async (chatId, userId, title) => (await client.put(`/chats/${chatId}/user/${userId}`, { title })).data,
         getMessages: async (chatId) => (await client.get(`/chats/${chatId}/messages`)).data,
-        sendMessage: async (chatId, userId, content, lang, provider, apiKey, ollamaUrl, ollamaModel) => {
+        sendMessage: async (chatId, userId, content, lang, provider, apiKey, geminiApiKey, ollamaUrl, ollamaModel) => {
             return (await client.post(`/chats/${chatId}/messages`, {
                 userId,
                 content,
                 lang,
                 provider,
                 apiKey,
+                geminiApiKey,
                 ollamaUrl,
                 ollamaModel
             })).data;
@@ -82,24 +83,26 @@ export const api = {
         getForms: async (lang = 'en') => (await client.get(`/forms?lang=${lang}`)).data,
         getFormDetails: async (formId) => (await client.get(`/forms/${formId}`)).data,
         prefill: async (formId, profile) => (await client.post('/forms/prefill', { formId, profile })).data,
-        extract: async ({ formId, currentValues, userMessage, lang, apiKey, provider, ollamaUrl, ollamaModel }) => {
+        extract: async ({ formId, currentValues, userMessage, lang, apiKey, geminiApiKey, provider, ollamaUrl, ollamaModel }) => {
             return (await client.post('/forms/extract', {
                 formId,
                 currentValues,
                 userMessage,
                 lang,
                 apiKey,
+                geminiApiKey,
                 provider,
                 ollamaUrl,
                 ollamaModel
             })).data;
         },
-        generateDraft: async ({ formId, values, lang, apiKey, provider, ollamaUrl, ollamaModel }) => {
+        generateDraft: async ({ formId, values, lang, apiKey, geminiApiKey, provider, ollamaUrl, ollamaModel }) => {
             return (await client.post('/forms/draft', {
                 formId,
                 values,
                 lang,
                 apiKey,
+                geminiApiKey,
                 provider,
                 ollamaUrl,
                 ollamaModel

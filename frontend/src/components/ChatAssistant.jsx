@@ -72,7 +72,7 @@ const renderMessageContent = (content) => {
   });
 };
 
-export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, ollamaModel, t }) {
+export default function ChatAssistant({ userProfile, lang, provider, customApiKey, geminiApiKey, ollamaUrl, ollamaModel, t }) {
   const [chats, setChats] = useState([]);
   const [activeChatId, setActiveChatId] = useState('');
   const [messages, setMessages] = useState([]);
@@ -267,7 +267,8 @@ export default function ChatAssistant({ userProfile, lang, provider, ollamaUrl, 
         tempUserMsg.content,
         lang,
         provider,
-        null, // Use global API key from backend
+        customApiKey,
+        geminiApiKey,
         ollamaUrl,
         ollamaModel
       );

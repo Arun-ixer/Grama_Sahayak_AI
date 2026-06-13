@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Sparkles, FileText, Download, UserCheck, Mic } from 'lucide-react';
 import { api } from '../services/api';
 
-export default function FormHelper({ userProfile, lang, provider, ollamaUrl, ollamaModel, t }) {
+export default function FormHelper({ userProfile, lang, provider, customApiKey, geminiApiKey, ollamaUrl, ollamaModel, t }) {
   const [forms, setForms] = useState([]);
   const [selectedFormId, setSelectedFormId] = useState('');
   const [formDetails, setFormDetails] = useState(null);
@@ -119,6 +119,8 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
         currentValues: formValues,
         userMessage: aiPrompt,
         lang,
+        apiKey: customApiKey,
+        geminiApiKey,
         provider,
         ollamaUrl,
         ollamaModel
@@ -140,6 +142,8 @@ export default function FormHelper({ userProfile, lang, provider, ollamaUrl, oll
         formId: selectedFormId,
         values: formValues,
         lang,
+        apiKey: customApiKey,
+        geminiApiKey,
         provider,
         ollamaUrl,
         ollamaModel

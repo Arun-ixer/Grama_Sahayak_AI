@@ -82,6 +82,7 @@ router.post('/:chatId/messages', async (req, res) => {
         lang,
         provider,
         apiKey,
+        geminiApiKey,
         ollamaUrl,
         ollamaModel
     } = req.body;
@@ -101,6 +102,7 @@ router.post('/:chatId/messages', async (req, res) => {
             lang || 'en',
             provider || 'gemini',
             apiKey || null,
+            geminiApiKey || null,
             ollamaUrl || null,
             ollamaModel || 'llama3'
         );
