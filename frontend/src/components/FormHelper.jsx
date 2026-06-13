@@ -130,8 +130,7 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
       setFormValues(updatedValues);
       setAiPrompt('');
     } catch (err) {
-      const errMsg = err.response?.data?.error || err.message || 'Unknown error';
-      setError(`Failed to extract slot details: ${errMsg}. Make sure your API keys are valid.`);
+      setError(`Please navigate to your Profile and enter valid API keys to use the AI extraction feature.`);
     } finally {
       setAiFilling(false);
     }
@@ -153,8 +152,7 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
       });
       setDraftText(res.draft);
     } catch (err) {
-      const errMsg = err.response?.data?.error || err.message || 'Unknown error';
-      setError(`Failed to generate draft: ${errMsg}. Make sure your API keys are valid.`);
+      setError(`Please navigate to your Profile and enter valid API keys to generate drafts.`);
     } finally {
       setDrafting(false);
     }
@@ -188,8 +186,8 @@ export default function FormHelper({ userProfile, lang, provider, customApiKey, 
       <hr className="divider" />
 
       {error && (
-        <div style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', padding: '12px', borderRadius: '8px', marginBottom: '20px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
-          ⚠️ {error}
+        <div style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', padding: '12px', borderRadius: '8px', marginBottom: '20px', border: '1px solid rgba(59, 130, 246, 0.2)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          💡 <span>{error}</span>
         </div>
       )}
 

@@ -277,12 +277,11 @@ export default function ChatAssistant({ userProfile, lang, provider, customApiKe
       loadMessages(chatId);
     } catch (err) {
       // console.(err);
-      const errMsg = err.response?.data?.error || err.message || 'Unknown error';
       const errorObj = {
         role: 'assistant',
-        content: `⚠️ **Connection Error:** ${errMsg}. \n\n*Please ensure you have provided valid API keys in your Profile settings.*`,
+        content: `💡 **Action Required:** Please navigate to the **Profile** tab and enter your API keys to continue using the AI features.`,
         created_at: new Date().toISOString(),
-        id: 'err-' + Date.now()
+        id: 'sys-' + Date.now()
       };
       setMessages(prev => [...prev, errorObj]);
     } finally {
