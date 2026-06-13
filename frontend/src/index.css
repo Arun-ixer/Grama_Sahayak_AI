@@ -709,9 +709,23 @@ h1, h2, h3, h4, h5, h6 {
   .auth-card-panel {
     padding: 24px 20px;
   }
+  .premium-card {
+    padding: 20px 16px;
+  }
   .nav-card {
     padding: 20px;
     gap: 12px;
+  }
+  .document-row {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+  .doc-meta-info {
+    max-width: calc(100% - 40px);
+  }
+  .doc-title {
+    word-break: break-word;
+    display: block;
   }
   .chat-msg-row {
     padding: 16px 12px;
