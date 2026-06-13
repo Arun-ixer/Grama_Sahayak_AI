@@ -97,7 +97,7 @@ class LLMService {
         const url = 'https://api.x.ai/v1/chat/completions';
         const payload = {
             messages,
-            model: 'grok-beta',
+            model: 'grok-4',
             stream: false
         };
 
@@ -115,8 +115,9 @@ class LLMService {
             }
             throw new Error('Invalid generation response structure from Grok API');
         } catch (e) {
-            console.error('Grok Generation Error:', e.message);
-            throw new Error(`Grok API request failed: ${e.response?.data?.error?.message || e.message}`);
+            console.error('Grok Generation Error Full response:', e.response?.data);
+            const errMsg = e.response?.data?.error?.message || typeof e.response?.data?.error === 'string' ? e.response?.data?.error : e.message;
+            throw new Error(`Grok API request failed: ${errMsg}`);
         }
     }
 
