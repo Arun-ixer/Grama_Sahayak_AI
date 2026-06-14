@@ -66,5 +66,12 @@
   "quick_q_kisan": "How can I apply for PM Kisan Nidhi?",
   "quick_q_caste": "What papers do I need for a Caste Certificate?",
   "quick_q_subsidy": "How do farmers apply for seed subsidy?",
-  "rename": "Rename"
+  "rename": "Rename",
+  "why_choose_title": "Why choose Grama Sahayak AI?",
+  "why_choose_reason_1_title": "24/7 Availability",
+  "why_choose_reason_1_desc": "Get answers and assistance anytime, anywhere.",
+  "why_choose_reason_2_title": "Local Languages",
+  "why_choose_reason_2_desc": "Full support for Hindi, Telugu, and English.",
+  "why_choose_reason_3_title": "Easy Form Filling",
+  "why_choose_reason_3_desc": "Step-by-step guidance for complex government forms."
 }

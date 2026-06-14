@@ -5,9 +5,16 @@ import ChatAssistant from './components/ChatAssistant';
 import FormHelper from './components/FormHelper';
 import DocumentDashboard from './components/DocumentDashboard';
 import UserProfile from './components/UserProfile';
-import { MessageSquare, FileText, FolderClosed, User, LogOut, ArrowLeft } from 'lucide-react';
+import { 
+  MessageSquare, FileText, FolderClosed, User, LogOut, ArrowLeft, 
+  Clock, Globe, CheckSquare, ShieldCheck, Languages, Zap, 
+  BrainCircuit, Lock, Tractor, FileCheck, HelpCircle, Search, 
+  Users, ArrowRight, Settings, Info, Heart, Database, LayoutDashboard,
+  Upload, Sparkles, BookOpen, ChevronRight, CheckCircle2, History
+} from 'lucide-react';
 import logo from './assets/logo.png';
 import bgVideo from './assets/bgv.mp4';
+import bgImg from './assets/bg.jpg';
 
 export default function App() {
   const [initialized, setInitialized] = useState(false);
@@ -92,6 +99,9 @@ export default function App() {
         profile: res.profile,
         access_token: res.session?.access_token
       }));
+      if (activeView === 'login') {
+        setActiveView('home');
+      }
     } catch (err) {
       // console.(err);
       setError(err.response?.data?.error || 'Invalid credentials or connection error.');
@@ -152,14 +162,18 @@ export default function App() {
   }
 
   // --- Login / Signup View ---
-  if (!user) {
+  if (!user && activeView !== 'home') {
     return (
       <div className="auth-outer-container">
-        <video className="bg-video" autoPlay loop muted playsInline>
-          <source src={bgVideo} type="video/mp4" />
-        </video>
+        <img src={bgImg} className="bg-video" alt="Background" />
         <div className="auth-card-panel">
-          <div className="text-center" style={{ marginTop: '-2.5rem', marginBottom: '-2rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+          {/* Back to Home Button */}
+          <button onClick={() => setActiveView('home')} className="btn-back-home" style={{ marginBottom: '16px' }}>
+            <ArrowLeft size={16} style={{ marginRight: '6px', display: 'inline-block', verticalAlign: 'middle' }} />
+            <span>{t('back_to_home') || 'Back to Home'}</span>
+          </button>
+          
+          <div className="text-center" style={{ marginTop: '-2.5rem', marginBottom: '-2rem', width: '100%', display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
             <img src={logo} alt="Gram Sahayak AI Logo" style={{ width: '100%', maxWidth: '400px', height: 'auto', transform: 'scale(1.15)' }} />
           </div>
           <hr className="divider" style={{ marginTop: '0.5rem' }} />
@@ -347,10 +361,17 @@ export default function App() {
               </div>
             )}
 
-            <button onClick={handleLogout} className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
-              <LogOut size={16} />
-              <span>{t('logout')}</span>
-            </button>
+            {user ? (
+              <button onClick={handleLogout} className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+                <LogOut size={16} />
+                <span>{t('logout') || 'Logout'}</span>
+              </button>
+            ) : (
+              <button onClick={() => setActiveView('login')} className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+                <User size={16} />
+                <span>{t('login') || 'Login'}</span>
+              </button>
+            )}
           </div>
         </header>
       )}
@@ -359,58 +380,234 @@ export default function App() {
       <main className="main-wrapper">
         {activeView === 'home' ? (
           <div className="home-dashboard-view">
-            {/* Welcoming Section */}
-            <div className="welcome-hero">
-              <h2>🌾 {t('home_welcome_title')}</h2>
-              <p>{t('home_welcome_subtitle')}</p>
-            </div>
-
-            {/* Core Action Grid */}
-            <div className="home-grid">
-              {/* Card 1: Chat Assistant */}
-              <div onClick={() => setActiveView('chat')} className="nav-card">
-                <div className="nav-card-icon">
-                  <MessageSquare size={32} />
-                </div>
-                <div className="nav-card-details">
-                  <h3>💬 {t('nav_chat')}</h3>
-                  <p>{t('ask_ai_desc')}</p>
+            {/* 1. Hero Section */}
+            <section className="hero-section">
+              <div className="hero-content">
+                <h1>Gram Sahayak AI – Your Digital Guide to Government Services</h1>
+                <p className="hero-subtitle">Access government schemes, certificates, welfare programs, and official documents in your own language with AI-powered assistance.</p>
+                <p className="hero-description">Gram Sahayak AI helps citizens understand government services, eligibility requirements, application procedures, certificates, and official documents through simple conversations. Get accurate information from verified government sources in English, Hindi, and Telugu.</p>
+                <div className="hero-actions">
+                  <button onClick={() => setActiveView('chat')} className="btn btn-primary"><MessageSquare size={20} /> Start Chat</button>
+                  <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Search size={20} /> Explore Schemes</button>
+                  <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Upload size={20} /> Upload Documents</button>
                 </div>
               </div>
+              <div className="hero-illustration">
+                <img src={logo} alt="Gram Sahayak AI Illustration" />
+              </div>
+            </section>
 
-              {/* Card 2: Form Helper */}
-              <div onClick={() => setActiveView('form_helper')} className="nav-card">
-                <div className="nav-card-icon">
-                  <FileText size={32} />
+            {/* 2. About Section */}
+            <section className="about-section glass-container">
+              <h2>What is Gram Sahayak AI?</h2>
+              <p>Gram Sahayak AI is an intelligent citizen assistance platform designed to simplify access to government information and welfare services. Many citizens find government documents difficult to understand due to technical language and complex procedures. Our platform transforms official information into clear, simple, and easy-to-understand guidance.</p>
+              <p>Using advanced Artificial Intelligence and verified government documents, Gram Sahayak AI helps users:</p>
+              <ul>
+                <li><CheckCircle2 size={18} className="text-green" /> Understand welfare schemes</li>
+                <li><CheckCircle2 size={18} className="text-green" /> Learn eligibility criteria</li>
+                <li><CheckCircle2 size={18} className="text-green" /> Access certificate information</li>
+                <li><CheckCircle2 size={18} className="text-green" /> Simplify official documents</li>
+                <li><CheckCircle2 size={18} className="text-green" /> Receive multilingual support</li>
+                <li><CheckCircle2 size={18} className="text-green" /> Get step-by-step application guidance</li>
+              </ul>
+              <p className="mission-text">Our mission is to make government services more accessible, transparent, and citizen-friendly.</p>
+            </section>
+
+            {/* 3. Why Choose Us Section */}
+            <section className="features-section">
+              <h2>Why Choose Gram Sahayak AI?</h2>
+              <div className="features-grid">
+                <div className="feature-card">
+                  <ShieldCheck size={32} className="feature-icon" />
+                  <h4>Reliable Information</h4>
+                  <p>Answers are generated using verified government documents and trusted sources.</p>
                 </div>
-                <div className="nav-card-details">
-                  <h3>📝 {t('nav_form')}</h3>
-                  <p>{t('fill_form_desc')}</p>
+                <div className="feature-card">
+                  <Languages size={32} className="feature-icon" />
+                  <h4>Multilingual Support</h4>
+                  <p>Interact in English, Hindi, or Telugu and receive responses in your preferred language.</p>
+                </div>
+                <div className="feature-card">
+                  <Sparkles size={32} className="feature-icon" />
+                  <h4>Easy to Understand</h4>
+                  <p>Complex government terminology is simplified into citizen-friendly language.</p>
+                </div>
+                <div className="feature-card">
+                  <BrainCircuit size={32} className="feature-icon" />
+                  <h4>AI-Powered Guidance</h4>
+                  <p>Get instant assistance for schemes, certificates, forms, and applications.</p>
+                </div>
+                <div className="feature-card">
+                  <Lock size={32} className="feature-icon" />
+                  <h4>Secure & Personalized</h4>
+                  <p>Your chats, profile preferences, and uploaded documents remain secure.</p>
+                </div>
+                <div className="feature-card">
+                  <Tractor size={32} className="feature-icon" />
+                  <h4>Built for Rural Citizens</h4>
+                  <p>Designed specifically for farmers, students, workers, women, entrepreneurs, and senior citizens.</p>
                 </div>
               </div>
+            </section>
 
-              {/* Card 3: Document Dashboard */}
-              <div onClick={() => setActiveView('dashboard')} className="nav-card">
-                <div className="nav-card-icon">
-                  <FolderClosed size={32} />
+            {/* 4. Services Section */}
+            <section className="services-section">
+              <h2>Services We Provide</h2>
+              <p className="section-subtitle">Explore a wide range of citizen-centric services powered by AI and verified government information.</p>
+              <div className="services-grid">
+                <div className="service-card">
+                  <BookOpen size={24} className="service-icon" />
+                  <h4>Government Scheme Guidance</h4>
+                  <p>Discover schemes applicable to you.</p>
                 </div>
-                <div className="nav-card-details">
-                  <h3>📚 {t('nav_dashboard')}</h3>
-                  <p>{t('scheme_desc')}</p>
+                <div className="service-card">
+                  <FileCheck size={24} className="service-icon" />
+                  <h4>Eligibility Verification</h4>
+                  <p>Check if you qualify for benefits.</p>
+                </div>
+                <div className="service-card">
+                  <FileText size={24} className="service-icon" />
+                  <h4>Certificate Information</h4>
+                  <p>How to apply for official certificates.</p>
+                </div>
+                <div className="service-card">
+                  <Zap size={24} className="service-icon" />
+                  <h4>Document Simplification</h4>
+                  <p>Understand complex official forms easily.</p>
+                </div>
+                <div className="service-card">
+                  <ArrowRight size={24} className="service-icon" />
+                  <h4>Application Process Guidance</h4>
+                  <p>Step-by-step help to apply.</p>
+                </div>
+                <div className="service-card">
+                  <Heart size={24} className="service-icon" />
+                  <h4>Welfare Scheme Assistance</h4>
+                  <p>Get the benefits you deserve.</p>
+                </div>
+                <div className="service-card">
+                  <Search size={24} className="service-icon" />
+                  <h4>AI Knowledge Search</h4>
+                  <p>Search verified databases quickly.</p>
+                </div>
+                <div className="service-card">
+                  <Users size={24} className="service-icon" />
+                  <h4>Multilingual Citizen Support</h4>
+                  <p>Help in your native language.</p>
                 </div>
               </div>
+            </section>
 
-              {/* Card 4: User Profile */}
-              <div onClick={() => setActiveView('profile')} className="nav-card">
-                <div className="nav-card-icon">
-                  <User size={32} />
+            {/* 5. How It Works Section */}
+            <section className="how-it-works-section">
+              <h2>How Gram Sahayak AI Works</h2>
+              <div className="steps-container">
+                <div className="step-box">
+                  <div className="step-number">1</div>
+                  <h4>Ask Your Question</h4>
+                  <p>Citizens ask questions in their preferred language.</p>
                 </div>
-                <div className="nav-card-details">
-                  <h3>⚙️ {t('nav_profile')}</h3>
-                  <p>{t('profile_desc')}</p>
+                <ChevronRight className="step-arrow" size={32} />
+                <div className="step-box">
+                  <div className="step-number">2</div>
+                  <h4>Retrieve Verified Information</h4>
+                  <p>The system searches trusted government documents and knowledge sources.</p>
+                </div>
+                <ChevronRight className="step-arrow" size={32} />
+                <div className="step-box">
+                  <div className="step-number">3</div>
+                  <h4>AI Understanding</h4>
+                  <p>AI analyzes the context and identifies the most relevant information.</p>
+                </div>
+                <ChevronRight className="step-arrow" size={32} />
+                <div className="step-box">
+                  <div className="step-number">4</div>
+                  <h4>Simple Guidance</h4>
+                  <p>Receive accurate, easy-to-understand answers with source references.</p>
                 </div>
               </div>
-            </div>
+            </section>
+
+            {/* 6. Impact Section */}
+            <section className="impact-section glass-container">
+              <h2>Empowering Rural Communities Through Technology</h2>
+              <p className="impact-desc">Gram Sahayak AI bridges the gap between citizens and government services by making information accessible, understandable, and available in local languages. Our goal is to reduce confusion, improve awareness, and increase access to welfare benefits.</p>
+              <div className="impact-grid">
+                <div className="impact-stat">
+                  <Languages size={36} />
+                  <h5>Multilingual AI Support</h5>
+                </div>
+                <div className="impact-stat">
+                  <Database size={36} />
+                  <h5>Verified Knowledge Base</h5>
+                </div>
+                <div className="impact-stat">
+                  <Users size={36} />
+                  <h5>Citizen-Centric Design</h5>
+                </div>
+                <div className="impact-stat">
+                  <FileCheck size={36} />
+                  <h5>Government Service Guidance</h5>
+                </div>
+              </div>
+            </section>
+
+            {/* 7. Quick Navigation Section */}
+            <section className="quick-nav-section">
+              <h2>Quick Access</h2>
+              <div className="quick-nav-grid">
+                <button onClick={() => setActiveView('home')} className="nav-btn"><LayoutDashboard size={20} /> Home</button>
+                <button onClick={() => setActiveView('chat')} className="nav-btn"><MessageSquare size={20} /> AI Assistant</button>
+                <button onClick={() => setActiveView('dashboard')} className="nav-btn"><FolderClosed size={20} /> Documents</button>
+                <button onClick={() => setActiveView('dashboard')} className="nav-btn"><BookOpen size={20} /> Knowledge Base</button>
+                <button onClick={() => setActiveView('profile')} className="nav-btn"><User size={20} /> Profile</button>
+                <button onClick={() => setActiveView('chat')} className="nav-btn"><History size={20} /> Chat History</button>
+                <button onClick={() => setActiveView('profile')} className="nav-btn"><Settings size={20} /> Settings</button>
+              </div>
+            </section>
+
+            {/* 8. Final Call-to-Action Section */}
+            <section className="final-cta-section glass-container">
+              <h2>Ready to Access Government Services Smarter?</h2>
+              <p>Start chatting with Gram Sahayak AI today and get instant guidance on welfare schemes, certificates, official documents, and government services in your preferred language.</p>
+              <div className="cta-buttons">
+                <button onClick={() => setActiveView('chat')} className="btn btn-primary"><MessageSquare size={20} /> Start Chat</button>
+                <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Upload size={20} /> Upload Documents</button>
+              </div>
+            </section>
+
+            {/* 9. Footer Section */}
+            <footer className="comprehensive-footer glass-container">
+              <div className="footer-content">
+                <div className="footer-brand">
+                  <h3>Gram Sahayak AI</h3>
+                  <p>Empowering rural citizens with multilingual AI assistance for government schemes, certificates, official documents, and welfare services. Making government information simple, accessible, and understandable for everyone.</p>
+                </div>
+                <div className="footer-links-container">
+                  <div className="footer-links">
+                    <h4>Links</h4>
+                    <ul>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('home'); }}>Home</a></li>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('chat'); }}>AI Assistant</a></li>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('dashboard'); }}>Documents</a></li>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('profile'); }}>Profile</a></li>
+                    </ul>
+                  </div>
+                  <div className="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                      <li><a href="#">Privacy Policy</a></li>
+                      <li><a href="#">Terms of Service</a></li>
+                      <li><a href="#">Contact Us</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="footer-bottom">
+                <p className="tagline">"Bridging Citizens and Government Services Through AI."</p>
+                <p className="copyright">© 2026 Gram Sahayak AI. All Rights Reserved.</p>
+              </div>
+            </footer>
           </div>
         ) : (
           <>
