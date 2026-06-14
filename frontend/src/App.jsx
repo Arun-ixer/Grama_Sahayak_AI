@@ -6,6 +6,8 @@ import FormHelper from './components/FormHelper';
 import DocumentDashboard from './components/DocumentDashboard';
 import UserProfile from './components/UserProfile';
 import { MessageSquare, FileText, FolderClosed, User, LogOut, ArrowLeft } from 'lucide-react';
+import logo from './assets/logo.png';
+import bgVideo from './assets/bgv.mp4';
 
 export default function App() {
   const [initialized, setInitialized] = useState(false);
@@ -25,7 +27,7 @@ export default function App() {
   const [authTab, setAuthTab] = useState('login'); // login | signup
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  
+
   const [signupName, setSignupName] = useState('');
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
@@ -52,12 +54,12 @@ export default function App() {
             setUser(parsed.user);
             setUserProfile(parsed.profile);
             setLang(parsed.profile?.preferred_language || 'en');
-            
+
             // Load API keys securely from DB profile
             if (parsed.profile?.provider) setProvider(parsed.profile.provider);
             if (parsed.profile?.chat_api_key) setChatApiKey(parsed.profile.chat_api_key);
             if (parsed.profile?.gemini_api_key) setGeminiApiKey(parsed.profile.gemini_api_key);
-            
+
             setInitialized(true);
             return;
           }
@@ -80,7 +82,7 @@ export default function App() {
       setUser(res.user);
       setUserProfile(res.profile);
       setLang(res.profile?.preferred_language || 'en');
-      
+
       // Load API keys securely from DB profile
       if (res.profile?.provider) setProvider(res.profile.provider);
       if (res.profile?.chat_api_key) setChatApiKey(res.profile.chat_api_key);
@@ -153,19 +155,23 @@ export default function App() {
   if (!user) {
     return (
       <div className="auth-outer-container">
+        <video className="bg-video" autoPlay loop muted playsInline>
+          <source src={bgVideo} type="video/mp4" />
+        </video>
         <div className="auth-card-panel">
-          <h1 className="title-gradient text-center">🌾 Gram Sahayak AI</h1>
-          <p className="auth-subtitle text-center">{t('app_subtitle')}</p>
-          <hr className="divider" />
+          <div className="text-center" style={{ marginTop: '-2.5rem', marginBottom: '-2rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <img src={logo} alt="Gram Sahayak AI Logo" style={{ width: '100%', maxWidth: '400px', height: 'auto', transform: 'scale(1.15)' }} />
+          </div>
+          <hr className="divider" style={{ marginTop: '0.5rem' }} />
 
           <div className="auth-tabs-toggle">
-            <button 
+            <button
               onClick={() => { setAuthTab('login'); setError(null); setSuccess(null); }}
               className={`auth-tab-btn ${authTab === 'login' ? 'active' : ''}`}
             >
               {t('login')}
             </button>
-            <button 
+            <button
               onClick={() => { setAuthTab('signup'); setError(null); setSuccess(null); }}
               className={`auth-tab-btn ${authTab === 'signup' ? 'active' : ''}`}
             >
@@ -180,23 +186,23 @@ export default function App() {
             <form onSubmit={handleLogin} className="flex-column-gap">
               <div className="input-group">
                 <label className="input-label">{t('email')}</label>
-                <input 
-                  type="email" 
-                  value={loginEmail} 
-                  onChange={(e) => setLoginEmail(e.target.value)} 
-                  className="input-field" 
-                  required 
+                <input
+                  type="email"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  className="input-field"
+                  required
                 />
               </div>
 
               <div className="input-group">
                 <label className="input-label">{t('password')}</label>
-                <input 
-                  type="password" 
-                  value={loginPassword} 
-                  onChange={(e) => setLoginPassword(e.target.value)} 
-                  className="input-field" 
-                  required 
+                <input
+                  type="password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  className="input-field"
+                  required
                   autoComplete="current-password"
                 />
               </div>
@@ -209,34 +215,34 @@ export default function App() {
             <form onSubmit={handleSignup} className="flex-column-gap">
               <div className="input-group">
                 <label className="input-label">{t('name')} *</label>
-                <input 
-                  type="text" 
-                  value={signupName} 
-                  onChange={(e) => setSignupName(e.target.value)} 
-                  className="input-field" 
-                  required 
+                <input
+                  type="text"
+                  value={signupName}
+                  onChange={(e) => setSignupName(e.target.value)}
+                  className="input-field"
+                  required
                 />
               </div>
 
               <div className="input-group">
                 <label className="input-label">{t('email')} *</label>
-                <input 
-                  type="email" 
-                  value={signupEmail} 
-                  onChange={(e) => setSignupEmail(e.target.value)} 
-                  className="input-field" 
-                  required 
+                <input
+                  type="email"
+                  value={signupEmail}
+                  onChange={(e) => setSignupEmail(e.target.value)}
+                  className="input-field"
+                  required
                 />
               </div>
 
               <div className="input-group">
                 <label className="input-label">{t('password')} *</label>
-                <input 
-                  type="password" 
-                  value={signupPassword} 
-                  onChange={(e) => setSignupPassword(e.target.value)} 
-                  className="input-field" 
-                  required 
+                <input
+                  type="password"
+                  value={signupPassword}
+                  onChange={(e) => setSignupPassword(e.target.value)}
+                  className="input-field"
+                  required
                   autoComplete="new-password"
                 />
               </div>
@@ -244,40 +250,40 @@ export default function App() {
               <div className="grid-2">
                 <div className="input-group">
                   <label className="input-label">{t('state')}</label>
-                  <input 
-                    type="text" 
-                    value={signupState} 
-                    onChange={(e) => setSignupState(e.target.value)} 
-                    className="input-field" 
+                  <input
+                    type="text"
+                    value={signupState}
+                    onChange={(e) => setSignupState(e.target.value)}
+                    className="input-field"
                   />
                 </div>
 
                 <div className="input-group">
                   <label className="input-label">{t('district')}</label>
-                  <input 
-                    type="text" 
-                    value={signupDistrict} 
-                    onChange={(e) => setSignupDistrict(e.target.value)} 
-                    className="input-field" 
+                  <input
+                    type="text"
+                    value={signupDistrict}
+                    onChange={(e) => setSignupDistrict(e.target.value)}
+                    className="input-field"
                   />
                 </div>
               </div>
 
               <div className="input-group">
                 <label className="input-label">{t('occupation')}</label>
-                <input 
-                  type="text" 
-                  value={signupOccupation} 
-                  onChange={(e) => setSignupOccupation(e.target.value)} 
-                  className="input-field" 
+                <input
+                  type="text"
+                  value={signupOccupation}
+                  onChange={(e) => setSignupOccupation(e.target.value)}
+                  className="input-field"
                 />
               </div>
 
               <div className="input-group">
                 <label className="input-label">{t('preferred_language')}</label>
-                <select 
-                  value={signupLang} 
-                  onChange={(e) => setSignupLang(e.target.value)} 
+                <select
+                  value={signupLang}
+                  onChange={(e) => setSignupLang(e.target.value)}
                   className="input-field"
                 >
                   <option value="en">English</option>
@@ -299,54 +305,55 @@ export default function App() {
   // --- Logged in Main Panel View ---
   return (
     <div className="app-main-layout">
+      <video className="bg-video" autoPlay loop muted playsInline>
+        <source src={bgVideo} type="video/mp4" />
+      </video>
       {/* Top Accessible Header */}
-      <header className="app-header">
-        <div className="header-logo-section">
-          <span className="header-logo">🌾</span>
-          <div className="header-title-block">
-            <h1 className="title-gradient">Gram Sahayak AI</h1>
-            <p>{t('app_subtitle')}</p>
-          </div>
-        </div>
-
-        <div className="header-actions">
-          {/* Quick Language Toggle Buttons */}
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <button 
-              className={`header-lang-btn ${lang === 'en' ? 'active' : ''}`}
-              onClick={() => setLang('en')}
-            >
-              🇺🇸 English
-            </button>
-            <button 
-              className={`header-lang-btn ${lang === 'hi' ? 'active' : ''}`}
-              onClick={() => setLang('hi')}
-            >
-              हिन्दी
-            </button>
-            <button 
-              className={`header-lang-btn ${lang === 'te' ? 'active' : ''}`}
-              onClick={() => setLang('te')}
-            >
-              తెలుగు
-            </button>
+      {activeView === 'home' && (
+        <header className="app-header">
+          <div className="header-logo-section">
+            <img src={logo} alt="Gram Sahayak AI Logo" style={{ height: '100px', width: '200px' }} />
           </div>
 
-          {userProfile && (
-            <div className="user-badge-header">
-              <div className="user-badge-avatar">
-                {userProfile.name?.charAt(0).toUpperCase()}
-              </div>
-              <span>{userProfile.name}</span>
+          <div className="header-actions">
+            {/* Quick Language Toggle Buttons */}
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button
+                className={`header-lang-btn ${lang === 'en' ? 'active' : ''}`}
+                onClick={() => setLang('en')}
+              >
+                English
+              </button>
+              <button
+                className={`header-lang-btn ${lang === 'hi' ? 'active' : ''}`}
+                onClick={() => setLang('hi')}
+              >
+                हिन्दी
+              </button>
+              <button
+                className={`header-lang-btn ${lang === 'te' ? 'active' : ''}`}
+                onClick={() => setLang('te')}
+              >
+                తెలుగు
+              </button>
             </div>
-          )}
 
-          <button onClick={handleLogout} className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
-            <LogOut size={16} />
-            <span>{t('logout')}</span>
-          </button>
-        </div>
-      </header>
+            {userProfile && (
+              <div className="user-badge-header">
+                <div className="user-badge-avatar">
+                  {userProfile.name?.charAt(0).toUpperCase()}
+                </div>
+                <span>{userProfile.name}</span>
+              </div>
+            )}
+
+            <button onClick={handleLogout} className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+              <LogOut size={16} />
+              <span>{t('logout')}</span>
+            </button>
+          </div>
+        </header>
+      )}
 
       {/* Main Content Area */}
       <main className="main-wrapper">
@@ -415,7 +422,7 @@ export default function App() {
 
             {/* Active view renderer */}
             {activeView === 'chat' && (
-              <ChatAssistant 
+              <ChatAssistant
                 userProfile={userProfile}
                 lang={lang}
                 provider={provider}
@@ -428,7 +435,7 @@ export default function App() {
             )}
 
             {activeView === 'form_helper' && (
-              <FormHelper 
+              <FormHelper
                 userProfile={userProfile}
                 lang={lang}
                 provider={provider}
@@ -441,7 +448,7 @@ export default function App() {
             )}
 
             {activeView === 'dashboard' && (
-              <DocumentDashboard 
+              <DocumentDashboard
                 userProfile={userProfile}
                 customApiKey={provider === 'gemini' ? chatApiKey : geminiApiKey}
                 t={t}
@@ -449,7 +456,7 @@ export default function App() {
             )}
 
             {activeView === 'profile' && (
-              <UserProfile 
+              <UserProfile
                 userProfile={userProfile}
                 setUserProfile={setUserProfile}
                 lang={lang}

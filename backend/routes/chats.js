@@ -95,6 +95,8 @@ router.post('/:chatId/messages', async (req, res) => {
         // A. Insert User message
         const userMsg = await supabaseService.createMessage(chatId, 'user', content);
 
+        console.log(`[DEBUG] RAG Query Input: userId=${userId}, provider=${provider}, apiKeyLength=${apiKey?.length || 0}, geminiKeyLength=${geminiApiKey?.length || 0}`);
+
         // B. Invoke RAG search pipeline
         const result = await ragService.queryAssistant(
             userId,
@@ -127,7 +129,10 @@ router.post('/:chatId/messages', async (req, res) => {
             assistantMessage: assistantMsg
         });
     } catch (e) {
-        console.error('Send message route error:', e.message);
+        console.error('============================');
+        console.error('SEND MESSAGE ROUTE ERROR:');
+        console.error(e.stack || e);
+        console.error('============================');
         res.status(500).json({ error: e.message });
     }
 });
