@@ -383,13 +383,13 @@ export default function App() {
             {/* 1. Hero Section */}
             <section className="hero-section">
               <div className="hero-content">
-                <h1>Gram Sahayak AI – Your Digital Guide to Government Services</h1>
-                <p className="hero-subtitle">Access government schemes, certificates, welfare programs, and official documents in your own language with AI-powered assistance.</p>
-                <p className="hero-description">Gram Sahayak AI helps citizens understand government services, eligibility requirements, application procedures, certificates, and official documents through simple conversations. Get accurate information from verified government sources in English, Hindi, and Telugu.</p>
+                <h1>{t('hero_title')}</h1>
+                <p className="hero-subtitle">{t('hero_subtitle')}</p>
+                <p className="hero-description">{t('hero_description')}</p>
                 <div className="hero-actions">
-                  <button onClick={() => setActiveView('chat')} className="btn btn-primary"><MessageSquare size={20} /> Start Chat</button>
-                  <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Search size={20} /> Explore Schemes</button>
-                  <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Upload size={20} /> Upload Documents</button>
+                  <button onClick={() => setActiveView('chat')} className="btn btn-primary"><MessageSquare size={20} /> {t('hero_start_chat')}</button>
+                  <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Search size={20} /> {t('hero_explore_schemes')}</button>
+                  <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Upload size={20} /> {t('hero_upload_docs')}</button>
                 </div>
               </div>
               <div className="hero-illustration">
@@ -399,180 +399,180 @@ export default function App() {
 
             {/* 2. About Section */}
             <section className="about-section glass-container">
-              <h2>What is Gram Sahayak AI?</h2>
-              <p>Gram Sahayak AI is an intelligent citizen assistance platform designed to simplify access to government information and welfare services. Many citizens find government documents difficult to understand due to technical language and complex procedures. Our platform transforms official information into clear, simple, and easy-to-understand guidance.</p>
-              <p>Using advanced Artificial Intelligence and verified government documents, Gram Sahayak AI helps users:</p>
+              <h2>{t('about_title')}</h2>
+              <p>{t('about_desc1')}</p>
+              <p>{t('about_desc2')}</p>
               <ul>
-                <li><CheckCircle2 size={18} className="text-green" /> Understand welfare schemes</li>
-                <li><CheckCircle2 size={18} className="text-green" /> Learn eligibility criteria</li>
-                <li><CheckCircle2 size={18} className="text-green" /> Access certificate information</li>
-                <li><CheckCircle2 size={18} className="text-green" /> Simplify official documents</li>
-                <li><CheckCircle2 size={18} className="text-green" /> Receive multilingual support</li>
-                <li><CheckCircle2 size={18} className="text-green" /> Get step-by-step application guidance</li>
+                <li><CheckCircle2 size={18} className="text-green" /> {t('about_li_understand')}</li>
+                <li><CheckCircle2 size={18} className="text-green" /> {t('about_li_eligibility')}</li>
+                <li><CheckCircle2 size={18} className="text-green" /> {t('about_li_certificate')}</li>
+                <li><CheckCircle2 size={18} className="text-green" /> {t('about_li_simplify')}</li>
+                <li><CheckCircle2 size={18} className="text-green" /> {t('about_li_multilingual')}</li>
+                <li><CheckCircle2 size={18} className="text-green" /> {t('about_li_guidance')}</li>
               </ul>
-              <p className="mission-text">Our mission is to make government services more accessible, transparent, and citizen-friendly.</p>
+              <p className="mission-text">{t('about_mission')}</p>
             </section>
 
             {/* 3. Why Choose Us Section */}
             <section className="features-section">
-              <h2>Why Choose Gram Sahayak AI?</h2>
+              <h2>{t('features_title')}</h2>
               <div className="features-grid">
                 <div className="feature-card">
                   <ShieldCheck size={32} className="feature-icon" />
-                  <h4>Reliable Information</h4>
-                  <p>Answers are generated using verified government documents and trusted sources.</p>
+                  <h4>{t('feature_reliable_title')}</h4>
+                  <p>{t('feature_reliable_desc')}</p>
                 </div>
                 <div className="feature-card">
                   <Languages size={32} className="feature-icon" />
-                  <h4>Multilingual Support</h4>
-                  <p>Interact in English, Hindi, or Telugu and receive responses in your preferred language.</p>
+                  <h4>{t('feature_multilingual_title')}</h4>
+                  <p>{t('feature_multilingual_desc')}</p>
                 </div>
                 <div className="feature-card">
                   <Sparkles size={32} className="feature-icon" />
-                  <h4>Easy to Understand</h4>
-                  <p>Complex government terminology is simplified into citizen-friendly language.</p>
+                  <h4>{t('feature_easy_title')}</h4>
+                  <p>{t('feature_easy_desc')}</p>
                 </div>
                 <div className="feature-card">
                   <BrainCircuit size={32} className="feature-icon" />
-                  <h4>AI-Powered Guidance</h4>
-                  <p>Get instant assistance for schemes, certificates, forms, and applications.</p>
+                  <h4>{t('feature_ai_title')}</h4>
+                  <p>{t('feature_ai_desc')}</p>
                 </div>
                 <div className="feature-card">
                   <Lock size={32} className="feature-icon" />
-                  <h4>Secure & Personalized</h4>
-                  <p>Your chats, profile preferences, and uploaded documents remain secure.</p>
+                  <h4>{t('feature_secure_title')}</h4>
+                  <p>{t('feature_secure_desc')}</p>
                 </div>
                 <div className="feature-card">
                   <Tractor size={32} className="feature-icon" />
-                  <h4>Built for Rural Citizens</h4>
-                  <p>Designed specifically for farmers, students, workers, women, entrepreneurs, and senior citizens.</p>
+                  <h4>{t('feature_rural_title')}</h4>
+                  <p>{t('feature_rural_desc')}</p>
                 </div>
               </div>
             </section>
 
             {/* 4. Services Section */}
             <section className="services-section">
-              <h2>Services We Provide</h2>
-              <p className="section-subtitle">Explore a wide range of citizen-centric services powered by AI and verified government information.</p>
+              <h2>{t('services_title')}</h2>
+              <p className="section-subtitle">{t('services_subtitle')}</p>
               <div className="services-grid">
                 <div className="service-card">
                   <BookOpen size={24} className="service-icon" />
-                  <h4>Government Scheme Guidance</h4>
-                  <p>Discover schemes applicable to you.</p>
+                  <h4>{t('service_scheme_title')}</h4>
+                  <p>{t('service_scheme_desc')}</p>
                 </div>
                 <div className="service-card">
                   <FileCheck size={24} className="service-icon" />
-                  <h4>Eligibility Verification</h4>
-                  <p>Check if you qualify for benefits.</p>
+                  <h4>{t('service_eligibility_title')}</h4>
+                  <p>{t('service_eligibility_desc')}</p>
                 </div>
                 <div className="service-card">
                   <FileText size={24} className="service-icon" />
-                  <h4>Certificate Information</h4>
-                  <p>How to apply for official certificates.</p>
+                  <h4>{t('service_certificate_title')}</h4>
+                  <p>{t('service_certificate_desc')}</p>
                 </div>
                 <div className="service-card">
                   <Zap size={24} className="service-icon" />
-                  <h4>Document Simplification</h4>
-                  <p>Understand complex official forms easily.</p>
+                  <h4>{t('service_document_title')}</h4>
+                  <p>{t('service_document_desc')}</p>
                 </div>
                 <div className="service-card">
                   <ArrowRight size={24} className="service-icon" />
-                  <h4>Application Process Guidance</h4>
-                  <p>Step-by-step help to apply.</p>
+                  <h4>{t('service_application_title')}</h4>
+                  <p>{t('service_application_desc')}</p>
                 </div>
                 <div className="service-card">
                   <Heart size={24} className="service-icon" />
-                  <h4>Welfare Scheme Assistance</h4>
-                  <p>Get the benefits you deserve.</p>
+                  <h4>{t('service_welfare_title')}</h4>
+                  <p>{t('service_welfare_desc')}</p>
                 </div>
                 <div className="service-card">
                   <Search size={24} className="service-icon" />
-                  <h4>AI Knowledge Search</h4>
-                  <p>Search verified databases quickly.</p>
+                  <h4>{t('service_search_title')}</h4>
+                  <p>{t('service_search_desc')}</p>
                 </div>
                 <div className="service-card">
                   <Users size={24} className="service-icon" />
-                  <h4>Multilingual Citizen Support</h4>
-                  <p>Help in your native language.</p>
+                  <h4>{t('service_support_title')}</h4>
+                  <p>{t('service_support_desc')}</p>
                 </div>
               </div>
             </section>
 
             {/* 5. How It Works Section */}
             <section className="how-it-works-section">
-              <h2>How Gram Sahayak AI Works</h2>
+              <h2>{t('how_title')}</h2>
               <div className="steps-container">
                 <div className="step-box">
                   <div className="step-number">1</div>
-                  <h4>Ask Your Question</h4>
-                  <p>Citizens ask questions in their preferred language.</p>
+                  <h4>{t('how_step1_title')}</h4>
+                  <p>{t('how_step1_desc')}</p>
                 </div>
                 <ChevronRight className="step-arrow" size={32} />
                 <div className="step-box">
                   <div className="step-number">2</div>
-                  <h4>Retrieve Verified Information</h4>
-                  <p>The system searches trusted government documents and knowledge sources.</p>
+                  <h4>{t('how_step2_title')}</h4>
+                  <p>{t('how_step2_desc')}</p>
                 </div>
                 <ChevronRight className="step-arrow" size={32} />
                 <div className="step-box">
                   <div className="step-number">3</div>
-                  <h4>AI Understanding</h4>
-                  <p>AI analyzes the context and identifies the most relevant information.</p>
+                  <h4>{t('how_step3_title')}</h4>
+                  <p>{t('how_step3_desc')}</p>
                 </div>
                 <ChevronRight className="step-arrow" size={32} />
                 <div className="step-box">
                   <div className="step-number">4</div>
-                  <h4>Simple Guidance</h4>
-                  <p>Receive accurate, easy-to-understand answers with source references.</p>
+                  <h4>{t('how_step4_title')}</h4>
+                  <p>{t('how_step4_desc')}</p>
                 </div>
               </div>
             </section>
 
             {/* 6. Impact Section */}
             <section className="impact-section glass-container">
-              <h2>Empowering Rural Communities Through Technology</h2>
-              <p className="impact-desc">Gram Sahayak AI bridges the gap between citizens and government services by making information accessible, understandable, and available in local languages. Our goal is to reduce confusion, improve awareness, and increase access to welfare benefits.</p>
+              <h2>{t('impact_title')}</h2>
+              <p className="impact-desc">{t('impact_desc')}</p>
               <div className="impact-grid">
                 <div className="impact-stat">
                   <Languages size={36} />
-                  <h5>Multilingual AI Support</h5>
+                  <h5>{t('impact_multilingual')}</h5>
                 </div>
                 <div className="impact-stat">
                   <Database size={36} />
-                  <h5>Verified Knowledge Base</h5>
+                  <h5>{t('impact_knowledge')}</h5>
                 </div>
                 <div className="impact-stat">
                   <Users size={36} />
-                  <h5>Citizen-Centric Design</h5>
+                  <h5>{t('impact_citizen')}</h5>
                 </div>
                 <div className="impact-stat">
                   <FileCheck size={36} />
-                  <h5>Government Service Guidance</h5>
+                  <h5>{t('impact_guidance')}</h5>
                 </div>
               </div>
             </section>
 
             {/* 7. Quick Navigation Section */}
             <section className="quick-nav-section">
-              <h2>Quick Access</h2>
+              <h2>{t('quick_nav_title')}</h2>
               <div className="quick-nav-grid">
-                <button onClick={() => setActiveView('home')} className="nav-btn"><LayoutDashboard size={20} /> Home</button>
-                <button onClick={() => setActiveView('chat')} className="nav-btn"><MessageSquare size={20} /> AI Assistant</button>
-                <button onClick={() => setActiveView('dashboard')} className="nav-btn"><FolderClosed size={20} /> Documents</button>
-                <button onClick={() => setActiveView('dashboard')} className="nav-btn"><BookOpen size={20} /> Knowledge Base</button>
-                <button onClick={() => setActiveView('profile')} className="nav-btn"><User size={20} /> Profile</button>
-                <button onClick={() => setActiveView('chat')} className="nav-btn"><History size={20} /> Chat History</button>
-                <button onClick={() => setActiveView('profile')} className="nav-btn"><Settings size={20} /> Settings</button>
+                <button onClick={() => setActiveView('home')} className="nav-btn"><LayoutDashboard size={20} /> {t('quick_nav_home')}</button>
+                <button onClick={() => setActiveView('chat')} className="nav-btn"><MessageSquare size={20} /> {t('quick_nav_assistant')}</button>
+                <button onClick={() => setActiveView('dashboard')} className="nav-btn"><FolderClosed size={20} /> {t('quick_nav_documents')}</button>
+                <button onClick={() => setActiveView('dashboard')} className="nav-btn"><BookOpen size={20} /> {t('quick_nav_knowledge')}</button>
+                <button onClick={() => setActiveView('profile')} className="nav-btn"><User size={20} /> {t('quick_nav_profile')}</button>
+                <button onClick={() => setActiveView('chat')} className="nav-btn"><History size={20} /> {t('quick_nav_history')}</button>
+                <button onClick={() => setActiveView('profile')} className="nav-btn"><Settings size={20} /> {t('quick_nav_settings')}</button>
               </div>
             </section>
 
             {/* 8. Final Call-to-Action Section */}
             <section className="final-cta-section glass-container">
-              <h2>Ready to Access Government Services Smarter?</h2>
-              <p>Start chatting with Gram Sahayak AI today and get instant guidance on welfare schemes, certificates, official documents, and government services in your preferred language.</p>
+              <h2>{t('cta_title')}</h2>
+              <p>{t('cta_desc')}</p>
               <div className="cta-buttons">
-                <button onClick={() => setActiveView('chat')} className="btn btn-primary"><MessageSquare size={20} /> Start Chat</button>
-                <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Upload size={20} /> Upload Documents</button>
+                <button onClick={() => setActiveView('chat')} className="btn btn-primary"><MessageSquare size={20} /> {t('cta_start_chat')}</button>
+                <button onClick={() => setActiveView('dashboard')} className="btn btn-secondary"><Upload size={20} /> {t('cta_upload_docs')}</button>
               </div>
             </section>
 
@@ -581,31 +581,31 @@ export default function App() {
               <div className="footer-content">
                 <div className="footer-brand">
                   <h3>Gram Sahayak AI</h3>
-                  <p>Empowering rural citizens with multilingual AI assistance for government schemes, certificates, official documents, and welfare services. Making government information simple, accessible, and understandable for everyone.</p>
+                  <p>{t('footer_tagline')}</p>
                 </div>
                 <div className="footer-links-container">
                   <div className="footer-links">
-                    <h4>Links</h4>
+                    <h4>{t('footer_links_title')}</h4>
                     <ul>
-                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('home'); }}>Home</a></li>
-                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('chat'); }}>AI Assistant</a></li>
-                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('dashboard'); }}>Documents</a></li>
-                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('profile'); }}>Profile</a></li>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('home'); }}>{t('quick_nav_home')}</a></li>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('chat'); }}>{t('quick_nav_assistant')}</a></li>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('dashboard'); }}>{t('quick_nav_documents')}</a></li>
+                      <li><a href="#" onClick={(e) => { e.preventDefault(); setActiveView('profile'); }}>{t('quick_nav_profile')}</a></li>
                     </ul>
                   </div>
                   <div className="footer-links">
-                    <h4>Legal</h4>
+                    <h4>{t('footer_legal_title')}</h4>
                     <ul>
-                      <li><a href="#">Privacy Policy</a></li>
-                      <li><a href="#">Terms of Service</a></li>
-                      <li><a href="#">Contact Us</a></li>
+                      <li><a href="#">{t('footer_privacy')}</a></li>
+                      <li><a href="#">{t('footer_terms')}</a></li>
+                      <li><a href="#">{t('footer_contact')}</a></li>
                     </ul>
                   </div>
                 </div>
               </div>
               <div className="footer-bottom">
-                <p className="tagline">"Bridging Citizens and Government Services Through AI."</p>
-                <p className="copyright">© 2026 Gram Sahayak AI. All Rights Reserved.</p>
+                <p className="tagline">{t('footer_motto')}</p>
+                <p className="copyright">{t('footer_copyright')}</p>
               </div>
             </footer>
           </div>

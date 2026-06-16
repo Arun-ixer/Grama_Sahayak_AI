@@ -1,5 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const WebSocket = require('ws');
+globalThis.WebSocket = WebSocket;
 
 dotenv.config({ override: true });
 
